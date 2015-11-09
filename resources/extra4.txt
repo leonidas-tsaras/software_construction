@@ -1,0 +1,104 @@
+http://web.mit.edu/6.005/www/fa15/classes/04-code-review/
+
+1. Code Review
+Γίνεται από άλλους προγραμματιστές
+Σκοπό έχει:
+	Βελτίωση του κώδικα
+	Βελτίωση του προγραμματιστή/ών μετά από ανταλλαγή απόψεων, γνωμών κ.λπ.
+Παράδειγμα: Τα open source projects όπως mozilla, Apache κ.λπ.
+
+2. Πρότυπα στιλ (Style Standards)
+Δεν υπάρχουν παγκόσμια πρότυπα αλλά μπορούμε να ακολουθήσουμε αυτό που προτείνει η google.
+Δείτε για παράδειγμα το λινκ: https://google.github.io/styleguide/javaguide.html
+
+2. Βασικοί κανόνες
+3. Don’t Repeat Yourself, ή DRY
+Αποφεύγουμε τις επαναλήψεις κώδικα (όπως copy-paste τις ίδιες συναρτήσεις)
+Δείτε: https://en.wikipedia.org/wiki/Don't_repeat_yourself
+
+3. Σημειώσεις όπου χρειάζεται (comments)
+
+3. Γρήγορη εμφάνιση του λάθους (Fail Fast)
+Προσπαθούμε να βρούμε πιθανά λάθη όσο το δυνατό πιο γρήγορα.
+
+3. Όχι στους μαγικούς αριθμούς (Magic Numbers)
+Δώστε "σωστό" όνομα και σημειώσεις σε σταθερές μεταβλητές και όχι μόνο.
+
+3. Σκοπός μεταβλητής
+Για κάθε μεταβλητή δίνουμε συγκεκριμένο σκοπό
+
+3. Whitespace
+Καλή οδόντωση και διαστήματα για ευανάγνωστο κώδικα
+
+3. Global μεταβλητές
+Αποφεύγουμε τις Global μεταβλητές.
+Δείτε: http://c2.com/cgi/wiki?GlobalVariablesAreBad
+
+3. Επιστροφή τιμής
+Οι συναρτήσεις να επιστρέφουν τιμή και όχι να κάνουν print
+
+Όλα τα παραπάνω πρέπει να καλύπτουν τα τρία βασικά απαιτούμενα:
+SFB, ETU και RFC
+που σημαίνουν:
+Safe From Bugs (SFB)
+Easy To Understand (ETU)
+Ready For Change (RFC).
+
+2. Παράδειγμα ύποπτου κώδικα (Smelly Example)
+public static int dayOfYear(int month, int dayOfMonth, int year) {
+    if (month == 2) {
+        dayOfMonth += 31;
+    } else if (month == 3) {
+        dayOfMonth += 59;
+    } else if (month == 4) {
+        dayOfMonth += 90;
+    } else if (month == 5) {
+        dayOfMonth += 31 + 28 + 31 + 30;
+    } else if (month == 6) {
+        dayOfMonth += 31 + 28 + 31 + 30 + 31;
+    } else if (month == 7) {
+        dayOfMonth += 31 + 28 + 31 + 30 + 31 + 30;
+    } else if (month == 8) {
+        dayOfMonth += 31 + 28 + 31 + 30 + 31 + 30 + 31;
+    } else if (month == 9) {
+        dayOfMonth += 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31;
+    } else if (month == 10) {
+        dayOfMonth += 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30;
+    } else if (month == 11) {
+        dayOfMonth += 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31;
+    } else if (month == 12) {
+        dayOfMonth += 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 31;
+    }
+    return dayOfMonth;
+}
+
+2. Παράδειγμα ύποπτου κώδικα (Smelly Example)
+public static boolean leap(int y) {
+    String tmp = String.valueOf(y);
+    if (tmp.charAt(2) == '1' || tmp.charAt(2) == '3' || tmp.charAt(2) == 5 || tmp.charAt(2) == '7' || tmp.charAt(2) == '9') {
+        if (tmp.charAt(3)=='2'||tmp.charAt(3)=='6') return true; /*R1*/
+        else
+            return false; /*R2*/
+    }else{
+        if (tmp.charAt(2) == '0' && tmp.charAt(3) == '0') {
+            return false; /*R3*/
+        }
+        if (tmp.charAt(3)=='0'||tmp.charAt(3)=='4'||tmp.charAt(3)=='8')return true; /*R4*/
+    }
+    return false; /*R5*/
+}
+
+2. Παράδειγμα ύποπτου κώδικα (Smelly Example)
+public static int LONG_WORD_LENGTH = 5;
+public static String longestWord;
+
+public static void countLongWords(List<String> words) {
+   int n = 0;
+   longestWord = "";
+   for (String word: words) {
+       if (word.length() > LONG_WORD_LENGTH) ++n;
+       if (word.length() > longestWord.length()) longestWord = word;
+   }
+   System.out.println(n);
+}
+

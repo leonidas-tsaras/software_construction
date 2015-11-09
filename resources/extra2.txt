@@ -1,0 +1,8 @@
+http://web.mit.edu/6.005/www/fa15/classes/02-basic-java/
+
+Java Collections
+Lists, Sets, and Maps
+
+Generics: declaring List, Set, and Map variables
+
+κ.λπ.

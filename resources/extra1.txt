@@ -1,0 +1,115 @@
+http://web.mit.edu/6.005/www/fa15/classes/01-static-checking/
+
+Τύποι δεδομένων
+Ο τύπος δεδομένων ορίζεται ως ένα σύνολο τιμών και ένα σύνολο πράξεων και που το αποτέλεσμα ανοίκει στο σύνολο τιμών
+Η Java έχει πρωταρχικούς τύπους (primitive types) τιμών όπως:
+
+	int (for integers like 5 and -200, but limited to the range ± 2^31, or roughly ± 2 billion)
+	long (for larger integers up to ± 2^63)
+	boolean (for true or false)
+	double (for floating-point numbers, which represent a subset of the real numbers)
+	char (for single characters like 'A' and '$')
+
+Η Java έχει επίσης τύπους δεδομένων σε μορφή αντικειμένου όπως:
+
+	String represents a sequence of characters.
+	BigInteger represents an integer of arbitrary size.
+
+Στη Java οι πρωταρχικοί τύποι γράφονται με πεζά γράμματα ενώ τα αντικείμενα-τύποι με κεφαλαίο το πρώτο (όπως οι κλάσεις).
+
+Στατικός έλεγχος, δυναμικός έλεγχος και μη έλεγχος
+Υπάρχουν γλώσσες στατικού ελέγχου και δυναμικού ελέγχου.
+Σε αυτές του στατικού (java) γίνεται έλεγχος πριν τη μεταγλώττιση ενώ στις δυναμικού κατά την εκτέλεση (run time) όπως η python.
+
+Στον στατικό έλεγχο πιάνονται (catch)
+	Λάθος σύνταξη
+	Λάθος όνομα (reserved words)
+	Λάθος αριθμός ορισμάτων σε συνάρτηση
+	Λάθος τύπος ορισμάτων
+	Λάθος τύπος επιστροφής (return)
+
+Στον δυναμικό έλεγχο πιάνονται (catch)
+	Λάθος τιμές ορισμάτων (x/y όπου y=0)
+	Λάθος τιμές επιστροφής
+	Τιμές εκτός ορίων (int, πίνακες)
+	Κλήση ή αναφορά σε αντικείμενα null
+
+Γενικά στον στατικό έλεγχο το λάθος έχει σχέση με τον τύπο του ορίσματος ενώ στον δυναμικό με την τιμή του ορίσματος.
+
+Στον μη έλεγχο δεν πιάνεται κανένα λάθος
+
+Ασκήσεις
+Ελέγξτε για δυναμικά, στατικά ή μη ελεγχόμενα λάθη στα παρακάτω παραδείγματα.
+
+int n = 5;
+if (n) {
+  n = n + 1;
+}
+
+int big = 200000; // 200,000
+big = big * big;  // big should be 4 billion now
+
+double probability = 1/5;
+
+int sum = 0;
+int n = 0;
+int average = sum/n;
+
+int sum = 0;
+int n = 0;
+int average = sum/n;
+
+double sum = 7;
+double n = 0;
+double average = sum/n;
+
+final int n = 5;
+System.out.println(n++);
+
+
+Κακές πρακτικές
+Μακρύς κώδικας χωρίς έλεγχο.
+Μη καταγραφή λεπτομερειών, σημειώσεων, παρατηρήσεων κ.λπ.
+Να υποθέτουμε ότι δεν υπάρχουν λάθη.
+
+Καλές πρακτικές
+Γράψτε λίγο κώδικα και ελέγξτε
+Τεκμηριώστε τις προυποθέσεις για σωστή λειτουργία
+Στατικός έλεγχος παντού
+
+
+Ο στόχος
+Ο κύριος στόχος είναι να παράξουμε "καλό" λογισμικό.
+
+	Σωστό, χωρίς λάθη
+	Κατανοητό
+	Εύκολο σε αλλαγές και ενημέρωση
+
+Εκτός των παραπάνω υπάρχουν και άλλα κριτήρια αλλά αυτά είναι τα πιο βασικά για έναν προγραμματιστή.
+
+
+To Hailstone σε μια κλάση
+
+  public class Hailstone {
+      /**
+       * Compute a hailstone sequence.
+       * @param n  Starting number for sequence.  Assumes n > 0.
+       * @return hailstone sequence starting with n and ending with 1.
+         */
+    public static List<Integer> hailstoneSequence(int n) {
+      List<Integer> list = new ArrayList<Integer>();
+      while (n != 1) {
+          list.add(n);
+          if (n % 2 == 0) {
+              n = n / 2;
+          } else {
+              n = 3 * n + 1;
+          }
+      }
+      list.add(n);
+      return list;
+    }
+  }
+
+
+

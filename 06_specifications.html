@@ -1,0 +1,164 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Προδιαγραφές (Specifications)</title>
+		<!-- http://web.mit.edu/6.005/www/fa15/classes/06-specifications/ -->
+    <link href="main.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+		<h1>Προδιαγραφές (Specifications)</h1>
+		<p>Περιγράφουν τα απαιτούμενα για ένα λογισμικό σύμφωνα με τα οποία ο προγραμματιστής θα πρέπει να υλοποιήσει. Το λογισμικό μπορεί να είναι μια μέθοδος, μία κλάση ή κάτι μεγαλύτερης κλίμακας.</p>
+		<h2>Γιατί χρειάζονται οι προδιαγραφές</h2>
+		<p>Τα περισσότερα λάθη προέρχονται από μη προδιαγραφές ή περιγραφές για τη λειτουργία και συμπεριφορά που πρέπει να έχει για παράδειγμα μια μέθοδος.</p>
+		<h5>Παράδειγμα</h5>
+		<p>Το παρακάτω παράδειγμα δείχνει τη μέθοδο add της BigInteger όπως τη δίνει η Oracle (jdk 8).</P>
+        <pre>
+            /**
+             * Returns a BigInteger whose value is {@code (this + val)}.
+             *
+             * @param  val value to be added to this BigInteger.
+             * @return {@code this + val}
+             */
+            public BigInteger add(BigInteger val) {
+                if (val.signum == 0)
+                    return this;
+                if (signum == 0)
+                    return val;
+                if (val.signum == signum)
+                    return new BigInteger(add(mag, val.mag), signum);
+                int cmp = compareMagnitude(val);
+                if (cmp == 0)
+                    return ZERO;
+                int[] resultMag = (cmp > 0 ? subtract(mag, val.mag)
+                                   : subtract(val.mag, mag));
+                resultMag = trustedStripLeadingZeroInts(resultMag);
+                return new BigInteger(resultMag, cmp == signum ? 1 : -1);
+            }
+        </pre>
+        <p>Χωρίς περιγραφή και μόνο με τον κώδικα θα ήταν δύσκολο να καταλάβουμε τι ακριβώς κάνει αυτή η μέθοδος.</p>
+        <p>Ο προγραμματιστής μπορεί να δουλέψει ελεύθερα και να αλλάξει ακόμα τον κώδικα χωρίς να χρειάζεται να ενημερώσει τι ακριβώς κάνει, αρκεί να λειτουργεί σωστά.</p>
+
+        <h2>Ισοδύναμες μέθοδοι</h2>
+        <p>Οι δύο παρακάτω μέθοδοι έχουν την ίδια λειτουργία.<br>
+        Βρίσκουν αν ένας αριθμός υπάρχει μέσα σε έναν πίνακα και επιστρέφουν το αντίστοιχο index αλλά διαφορετικά υλοποιημένες.
+        </p>
+        <pre>
+            static int findFirst(int[] arr, int val) {
+                for (int i = 0; i < arr.length; i++) {
+                    if (arr[i] == val) return i;
+                }
+                return arr.length;
+            }
+
+            static int findLast(int[] arr, int val) {
+                for (int i = arr.length -1 ; i >= 0; i--) {
+                    if (arr[i] == val) return i;
+                }
+                return -1;
+            }
+        </pre>
+        <p>Ποιές είναι οι διαφορές και πως συμπεριφέρονται σε ορισμένες οριακές περιπτώσεις;</p>
+        <ol>
+            <li>Η findFirst επιστρέφει τον πρώτο index ενώ η findLast τον τελευταίο, άρα διαφορετικά index αν υπάρχουν πάνω από δύο εμφανίσεις της val.</li>
+            <li>Αν το val δεν υπάρχει στον πίνακα η findFirst επιστρέφει το arr.length ενώ η findLast το -1.</li>
+        </ol>
+        <h5>Άσκηση</h5>
+        <p>Να υλοποιηθεί η  μέθοδος: static int find(int[] arr, int val)<br>που θα ικανοποιεί τις παρακάτω προδιαγραφές.</p>
+        <ul>
+            <li>Το val να υπάρχει μόνο μια φορά στον πίνακα arr.</li>
+            <li>Να επιστρέφει το index i όταν arr[i] = val.</li>
+            <li>Να επιστρέφει ένα μη έγκυρο index αν δεν υπάρχει το val στο arr.</li>
+        </ul>
+        <h2>Δομή προδιαγραφών</h2>
+        <p>Οι προδιαγραφές ως προς τη δομή τους χωρίζονται σε προ-συνθήκες (preconditions) και μετα-συνθήκες (postconditions).</p>
+        <p>Οι προ-συνθήκες περιγράφουν τι πρέπει να υλοποιηθεί και έχουν σχέση περισσότερο με το input (αναφέρονται και ως requires).</p>
+        <p>Οι μετα-συνθήκες περιγράφουν ποιό πρέπει να είναι το αποτέλεσμα και έχουν σχέση περισσότερο με το output (αναφέρονται και ως effects).</p>
+
+
+        <h5>Άσκηση</h5>
+        <p>Εστω η static int find(int[] arr, int val) <br>και οι παρακάτω προδιαγραφές:</p>
+        <ul>
+            <li>requires: η val εμφανίζεται μόνο μία φορά στον arr</li>
+            <li>effects: επιστρέφει το index i για το οποίο ισχύει arr[i] = val</li>
+        </ul>
+        <p>Ως προγραμματιστής ποιες από τις παρακάτω επιλογές θεωρείτε λογικές:</p>
+        <ul>
+            <li>return 0 αν ο arr είναι κενός (χωρίς στοιχεία)</li>
+            <li>αν ο arr είναι κενός να πετάει (throw) μια εξαίρεση (exception)</li>
+            <li>αν η val εμφανίζεται δύο φορές να πετάει μια εξαίρεση</li>
+            <li>αν η val εμφανίζεται δύο φορές να μηδενίζεται ο πίνακας και να πετάει μια εξαίρεση</li>
+            <li>αν ο arr δεν είναι κενός και η val εμφανίζεται πάνω από μία φορά να κάνει return το πρώτο index</li>
+            <li>αν η val βρεθεί στη θέση arr[0], τότε επιστρέφει 0</li>
+        </ul>
+
+        <h2>Οι προδιαγραφές στη java (javadoc)</h2>
+        <p>Η java χρησιμοποεί τις δικές της συμβάσεις για τις προδιαγραφές.</p>
+        <p>Για τις προδιαγραφές η java χρησιμοποιεί τον όρο javadoc από το java και το σύντομο documentation.</p>
+        <p>Σύμφωνα με αυτές οι παράμετροι περιγράφονται με το "@param" πρίν την περιγραφή, και οι επιστροφές με @return και @throws.</p>
+        <p>Γενικά για τις προ-συνθήκες χρησιμοποιούμε το @param ενώ για τις μετά-συνθήκες τα @return και @throws.</p>
+        <p>Έτσι, για την παραπάνω άσκηση οι προδιαγραφές της static int find(int[] arr, int val):</p>
+        <ul>
+            <li>requires: η val εμφανίζεται μόνο μία φορά στον arr</li>
+            <li>effects: επιστρέφει το index i για το οποίο ισχύει arr[i] = val</li>
+        </ul>       
+        <p>θα εμφανίζονταν στην java ως εξής:</p>
+        <pre>
+            /**
+             * Find a value in an array.
+             * @param arr array to search, requires that val occurs exactly once  in arr
+             * @param val value to search for
+             * @return index i such that arr[i] = val
+             */
+            static int find(int[] arr, int val) {...}
+        </pre>
+        <p>Στη συνέχεια γίνεται αναφορά για τη μορφή και τους κανόνες που πρέπει να χρησιμοποιούμε όταν προσθέτουμε javadoc στον κώδικα.</p>
+        <ul>
+            <li>Οι προδιαγραφές ή σημειώσεις Javadoc εισάγωνται όπως και οι σημειώσεις πολλών γραμμών με τη διαφορά ότι αρχίζουν με διπλό αστερίσκο (/**)‪</li>
+            <li>Οι προδιαγραφές προηγούνται των δηλώσεων των κλάσεων, διεπαφών, μεθόδων και πεδίων.</li>
+            <li>Στην περιγραφή μπορεί να υπάρχουν ετικέτες html.</li>
+            <li>Η αρχική περιγραφή πρέπει να είναι συνοπτική αλλά και περιεκτική.</li>
+            <li>Για την περιγραφή μιας μεθόδου ξεκινάμε πάντα με ένα ρήμα π.χ.: Determine whether this container is empty or not.</li>
+            <li>Αποφεύγουμε τις συντμήσεις.</li>
+        </ul> 
+        <p>Χρησιμοποιούνται συγκεκριμένες λέξεις με το προθεμα (@) για την περιγραφή συγκεκριμένων εννοιών.  Οι λέξεις λέγονται Javadoc tags.</p>
+        <p>Αυτές είναι:</p>
+        <ul>
+            <li>@author name (χρησιμοποιούνται σε διεπαφές και κλάσεις).</li>
+            <li>@since version  (χρησιμοποιούνται σε διεπαφές και κλάσεις).</li>
+            <li>@version description  (χρησιμοποιούνται σε διεπαφές και κλάσεις).</li>
+            <li>@deprecated  (χρησιμοποιούνται σε διεπαφές, κλάσεις και μεθόδους).</li>
+            <li>@param name description (χρησιμοποιούνται σε μεθόδους).</li>
+            <li>@return description (χρησιμοποιούνται σε μεθόδους).</li>
+            <li>@throws exception description (χρησιμοποιούνται σε μεθόδους).</li>
+            <li>@see classname (χρησιμοποιούνται παντού).</li>
+            <li>@see classname#member  (χρησιμοποιούνται παντού).</li>
+        </ul>
+
+        <h3>Η σειρά των Javadoc tags</h3>
+        <p>Η σειρά που πρέπει να ακολουθείται είναι η παρακάτω:</p>
+        <ul>
+            <li>@author</li>
+            <li>@version</li>
+            <li>@param</li>
+            <li>@return</li>
+            <li>@throws</li>
+            <li>@see</li>
+            <li>@since</li>
+            <li>@deprecated</li>
+        </ul>
+
+        <h3>Πολλαπλά Javadoc tags</h3>
+        <p>Τα παρακάτω tags μπορεί να υπάρχουν παραπάνω από μία φορά σε μια προδιαγραφή.</p>
+        <ul>
+            <li>@author</li>
+            <li>@param</li>
+            <li>@throws</li>
+        </ul>
+
+        <h3>Το εργαλείο Javadoc</h3>
+        <p>Με το εργαλείο αυτό μπορούμε να παράξουμε ένα html έγγραφο το οποίο θα τεκμηριώνει τις κλάσεις, τις διεπαφές, τις μεθόδους και τα πεδία σύμφωνα με τις κανονικές αλλά και τις Javadoc σημειώσεις που έχουμε περάσει στον κώδικα.</p>
+        <p>Για περισσότερες πληροφορίες:</p>
+        <p>http://javaworkshop.sourceforge.net/chapter4.html</p>
+        <p>http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html</p>
+	</body>
+</html>

@@ -1,0 +1,187 @@
+http://web.mit.edu/6.005/www/fa15/classes/08-avoiding-debugging/
+
+1. Αποφεύγοντας την αποσφαλμάτωση (Avoiding Debugging)
+Το κεφάλαιο της αποσφαλμάτωσης (Debugging) είναι μεγάλο αλλά εδώ θα δούμε τα βασικά που πρέπει πάντα
+ να εφαρμόζουμε.
+2. Πρώτη άμυνα
+- Χρησιμοποιούμε πλαίσιο εργασίας (framework) με ισχυρό στατικό έλεγχο (static checking) και επίσης προσπαθούμε να εμφανίσουμε όλα τα λάθη μέσα από το δυναμικό έλεγχο (dynamic checking).
+
+- Ανοσία (immunity), με την έννοια ότι μεταβλητές και μέθοδοι που δεν αλλάζουν ή δεν πρέπει να αλλάξουν με κάποιον τρόπο είναι καλό να τις χαρακτηρίζουμε ως final.
+
+2. Δεύτερη άμυνα (εντοπισμός σε περιορισμένο χώρο)
+- Προσπαθούμε να εντοπίσουμε τα λάθη σε έναν περιορισμένο χώρο όπως μια μέθοδος ή έστω μια κλάση. Όσο πιο μικρός είναι ο χώρος που ξάχνουμε τόσο πιο γρήγορα θα εντοπίσουμε το λάθος.
+
+- Γρήγορο λάθος. Αυτό γίνεται στην αρχή με το πρώτο 'τρέξιμο' και δοκιμάζοντας οριακές τιμές έτσι ώστε αν γίνεται να εμφανιστεί το λάθος όσο πιο νωρίς. Αν δεν εντοπιστεί νωρίς μπορεί στη συνέχεια η αποσφαλμάτωση να είναι δυσκολότερη.
+
+2. Assertions
+Με τη χρήση της εντολής assert μπορούμε να ελέγξουμε τιμές μεταβλητών και να βγάλουμε συμπεράσματα για τη σωστή ή όχι λειτουργία του κώδικα.
+Η assert συντάσεται με δύο τρόπους:
+-	assert(συνθήκη);
+	Αν η συνθήκη είναι ψευδής (false) τότε πετάει μια εξαίρεση (AssertionError) .
+-	assert(συνθήκη) : (τιμή ή μήνυμα);
+	Αν η συνθήκη είναι ψευδής (false) τότε πετάει μια εξαίρεση (AssertionError) και την τιμή ή το μήνυμα που ακολουθεί την εξαίρεση.
+
+Προσοχή: Πρέπει να έχει ενεργοποιηθεί ο μηχανισμός του Assertion στο περιβάλλον που εργάζεστε.
+
+3. Τι μπορείτε να κάνετε assert
+Αυτό που γίνεται assert είναι συνήθως οι τιμές ορισμάτων, τιμές επιστροφής, τιμές σε δομές ελέγχου και δομές επανάληψης.
+
+3. Τι δεν πρέπει να κάνετε assert
+Μην ελέγχετε συνθήκες που είναι εκτός κώδικα όπως το άνοιγμα ενός αρχείου. Τα assert τα χρησιμοποιούμε για να εντοπίσουμε λάθη που εμείς κάνουμε.
+
+Ποτέ δεν χρησιμοποιούμε τα assert ως μέρος του προγράμματος.
+Παραδειγμα
+
+// don't do this:
+assert list.remove(x);
+
+αντίθετα γράψτε:
+boolean found = list.remove(x);
+assert found;
+
+2. Τμηματική ή μερική ανάπτυξη (Incremental Development)
+Με την τεχνική αυτή κάθε φορά που γράφεται μια μικρή ενότητα κώδικα κάνετε και το σχετικό τεστ. Αν υπάρχει λάθος θα πρέπει να υπαρχει στην τελευταία ενότητα (κατά κανόνα).
+
+Δείτε επίσης κεφάλαιο 03 σχετικά με Unit testing και Regression testing.
+
+Δομικότητα (Modularity)
+Γράφουμε κώδικα όσο το δυνατό σε μικρές και ανεξάρτητες δομικές μονάδες. Αυτό βοηθάει (εκτός των άλλων πλεονεκτημάτων) στο γρήγορο εντοπισμό του λάθους.
+
+Ενθυλάκωση (Encapsulation)
+Προσπαθούμε να έχουμε τα μέλη μιας κλάσης ή τα πεδία μιας μεθόδου όσο το δυνατό 'κρυφά' και μη προσβάσιμα από 'εξωτερικό' κώδικα.
+Πιο συγκεκριμένα
+-	Χρησιμοποιούμε public και private όπου χρειάζεται.
+-	Περιορίζουμε το πεδίο ισχύος (scope) στο ελάχιστο.
+-	Χρησιμοποιούμε μεταβλητές όταν χρειάζονται, κοντά στον κώδικα που χρησιμοποιούνται και για πολύ συγκεκριμένο λόγο ή λειτουργία.
+-	Αποφεύγουμε τις global μεταβλητές
+
+2. Ασκήσεις
+- Ελέγξτε αν υπάρχει κάποιο λάθος στον παρακάτω κώδικα και τι παρατηρήσεις έχετε να κάνετε:
+
+final char[] vowels = new char[] { 'a', 'e', 'i', 'o', 'u' };
+vowels = new char[] { 'x', 'y', 'z' }; 
+vowels[0] = 'z';
+
+- Έστω ο κώδικας:
+
+char vowel0 = 'a';
+final char vowel1 = vowel0;
+
+String vowel2 = vowel1 + "eiou";
+final String vowel3 = vowel2;
+
+char[] vowel4 = new char[] { vowel0, 'e', 'i', 'o', 'u' };
+final char[] vowel5 = vowel4;
+
+Ποιά από τις παρακάτω γραμμές είναι σωστή αν προστεθεί στο τέλος.
+vowel0 = 'y';
+vowel1 = vowel0;
+vowel2 = "uoie" + vowel1;
+vowel3 = vowel2;
+vowel2[0] = 'x';
+vowel3[0] = 'x';
+vowel4 = vowel5;
+vowel5 = vowel4;
+vowel4[0] = 'x';
+vowel5[0] = 'z';
+
+- Έστω ο κώδικας:
+
+- /**
+ * @param x  requires x >= 0
+ * @return approximation to square root of x
+ */
+public double sqrt(double x) {
+
+}
+
+προσθέστε ένα assert που θα ελέγχει αν το x είναι αρνητικό.
+
+- Έστω η ημιτελής μέθοδος:
+
+/**
+ * Solves quadratic equation ax^2 + bx + c = 0.
+ * 
+ * @param a quadratic coefficient, requires a != 0
+ * @param b linear coefficient
+ * @param c constant term
+ * @return a list of the real roots of the equation
+ */
+public static List<Double> quadraticRoots(final int a, final int b, final int c) {
+    List<Double> roots = new ArrayList<Double>();
+    // A
+    ... // compute roots        
+    // B
+    return roots;
+}
+
+Ποιά assert από τα παρακάτω μπορούν να περάσουν στην περιοχή Α.
+assert a != 0;
+assert b != 0;
+assert c != 0;
+assert roots.size() >= 0;
+assert roots.size() <= 2;
+for (double x : roots) { assert Math.abs(a*x*x + b*x + c) < 0.0001; }
+
+Ποιά assert από τα παρακάτω μπορούν να περάσουν στην περιοχή Β.
+assert a != 0;
+assert b != 0;
+assert c != 0;
+assert roots.size() >= 0;
+assert roots.size() <= 2;
+for (double x : roots) { assert Math.abs(a*x*x + b*x + c) < 0.0001; }
+
+- Έστω ο παρακάτω κώδικας (λείπουν κάποιες ματαβλητές)
+
+1 class Apartment {
+2     Apartment(String newAddress) {
+3         this.address = newAddress;
+4         this.roommates = new HashSet<Person>();
+5     }
+6     
+7     String getAddress() {
+8         return address;
+9     }
+10    
+11    void addRoommate(Person newRoommate) {
+12        roommates.add(newRoommate);
+13        if (roommates.size() > MAXIMUM_OCCUPANCY) {
+14            roommates.remove(newRoommate);
+15            throw new TooManyPeopleException();
+15        }
+16    }
+17    
+18    void getMaximumOccupancy() {
+19        return MAXIMUM_OCCUPANCY;
+20    }
+21 }
+
+Ποιές από τις παρακάτω γραμμές είναι στο πεδίο ισχύος της μεταβλητής newRoommate;
+line 3
+line 8
+line 12
+line 15
+line 20
+
+Ποιό είναι το πεδίο ισχύος της μεταβλητής address (μη δηλωμένη στον κώδικα)
+lines 2-21
+lines 3-4
+line 8
+lines 12-16
+
+Ποιά από τις παρακάτω είναι η καλύτερη δήλωση για τη μεταβλητή roommates;
+List<Person> roommates;
+Set<Person> roommates;
+final Set<Person> roommates;
+HashSet<Person> roommates;
+
+Ποιά από τις παρακάτω είναι η καλύτερη δήλωση για τη μεταβλητή MAXIMUM_OCCUPANCY;
+int MAXIMUM_OCCUPANCY = 8;
+final int MAXIMUM_OCCUPANCY = 8;
+static int MAXIMUM_OCCUPANCY = 8;
+static final int MAXIMUM_OCCUPANCY = 8;
+
+
+
+
+

@@ -1,0 +1,187 @@
+http://web.mit.edu/6.005/www/fa15/classes/03-testing/
+
+
+1. Testing
+
+2. Validation
+Testing is an example of a more general process called validation. 
+The purpose of validation is to uncover problems in a program and thereby increase your confidence in the program’s correctness. 
+Validation includes:
+	Verification
+	Code review
+	Testing
+Δεν υπάρχει τέλειο λογισμικό.
+Ενδεικτικά έχουμε τις παρακάτω μετρήσεις
+
+	1 - 10 defects/kloc: Βιομηχανικό λογισμικό.
+	0.1 - 1 defects/kloc: Υψηλής ποιότητας validation.
+	0.01 - 0.1 defects/kloc: Το καλύτερο validation (NASA).
+
+Δηλαδή, στατιστικά, σε ένα εκατομμύριο γραμμές κώδικα πρέπει να υπάρχουν 1000 bugs!
+
+2. Γιατί το testing είναι δύσκολο
+	Εξαντλητικό testsing (είναι αδύνατο, άπειροι συνδυασμοί)
+	Τυχαίο testsing (δεν έχει επιθυμητά αποτελέσματα)
+	Δειγματοληπτκό ή στατιστικό testsing (όχι αρκετό για λογισμικό)
+
+2. Test cases και test suites
+Για τον καλό έλεγχο πρέπει να γραφτεί ένα πλήρες σετ από test cases.
+Ένα σύνολο από test cases αποτελεί ένα test suite
+Ο στόχος του προγραμματιστή: ένα πρόγραμμα που τρέχει.
+Ο στόχος του tester: να κάνει crush το πρόγραμμα, πρέπει να είναι "βίαιος"
+
+3. Τest-first-programming
+Για παράδειγμα αν έχουμε μια συνάρτηση, ακολουθούμε τα  παρακάτω βήματα:
+	Περιγραφή της συνάρτησης
+	Περιγραφή τεστ που θα ελέγχει τη συνάρτηση
+	Γραφή κώδικα και έλεγχος με τα παραπάνω τεστ
+
+3. Test Cases by Partitioning
+Χωρίζουμε το input domain σε αντιπροσωπευτικά μέρη και τεστάρουμε το δείγμα από τα μέρη καλύπτοντας έτσι με τον καλύτερο τρόπο το input domain.
+Επίσης πρέπει να ελεγχθούν ακραίες τιμές όπως 0 και πολύ μεγάλες τιμές εκτός ορίων (int).
+http://web.mit.edu/6.005/www/fa15/classes/03-testing/figures/multiply-partition.png
+Παράδειγμα.
+Έστω η συνάρτηση: int max(int a, int b) { ... }
+Τα πιθανά πεδία είναι:
+
+	a < b
+	a = b
+	a > b
+
+	τιμές για  a
+	a = 0
+	a < 0
+	a > 0
+	a = minimum integer
+	a = maximum integer
+
+	τιμές για  b
+	b = 0
+	b < 0
+	b > 0
+	b = minimum integer
+	b = maximum integer
+
+Οι τιμές ελέγχου για τις παραπάνω περιπτώσεις μπορεί να είναι:
+
+	(1, 2) καλύπτει a < b, a > 0, b > 0
+	(-1, -3) καλύπτει a > b, a < 0, b < 0
+	 (0, 0) καλύπτει a = b, a = 0, b = 0
+	(Integer.MIN_VALUE, Integer.MAX_VALUE) καλύπτει a < b, a = minint, b = maxint
+	(Integer.MAX_VALUE, Integer.MIN_VALUE) καλύπτει a > b, a = maxint, b = minint
+
+4. Η σημασία των ορίων στα τεστ
+Είναι σημαντικό τα τέστ να περιλαμβάνουν οριακές τιμές (0, "", null, τιμές εκτός ορίων, στοιχεία εκτός μήκους πίνακα κ.λπ.) γιατί εκεί συμβαίνουν τα περισσότερα λάθη.
+Πιθανά προγραμματιστικά λάθη μπορεί να είναι:
+	<= αντί <
+	αρχική τιμή 0 αντί 1
+	Ο int γίνεται αρνητικός πάνω από κάποια τιμή(!!!)
+
+Άσκηση
+Έστω η συνάρτηση:
+public static String reverseEnd(String text, int start);
+Θεώρησε τις παρακάτω προδιαγραφές:
+	Αντιστρέφει το τέλος της συμβολοσειράς
+	Η παράμετρος text είναι μια μη null συμβολοσειρά
+	Η παράμετρος start ορίζει το σημείο από το οποίο αρχίζει η αντιστροφή
+	Πρέπει να ισχύει: 0 <= start <= text.length()
+	Με start == 0, αντιστρέφει όλη τη συμβολοσειρά
+	Με start ==  text.length(), δεν αντιστρέφει τίποτα
+	Παράδειγμα: reverseEnd("Hello, world", 5) δίνει "Hellodlrow ,"
+
+Ποιά από τις παρακάτω περιπτώσεις φαίνεται πιο "λογική"
+
+	start = 0, start = 5, start = 100
+	start < 0, start = 0, start > 0
+	start = 0, 0 < start < text.length(), start = text.length()
+	start < text.length(), start = text.length(), start > text.length()
+
+3. Blackbox και Whitebox Testing
+	Blackbox: Ελέγχουμε σύμφωνα με την περιγραφή και όχι με τον κώδικα
+	Whitebox: Γνωρίζουμε πως έχει υλοποιηθεί ο κώδικας
+Άσκηση
+Έστω η συνάρτηση:
+/**
+ * Sort a list of integers in nondecreasing order.  Modifies the list so that 
+ * values.get(i) <= values.get(i+1) for all 0<=i<values.length()-1
+ */
+public static void sort(List<Integer> values) {
+    // choose a good algorithm for the size of the list
+    if (values.length() < 10) {
+        radixSort(values);
+    } else if (values.length() < 1000*1000*1000) {
+        quickSort(values);
+    } else {
+        mergeSort(values);
+    }
+}
+
+Στα παρακάτω test cases, ποιές ελέγχουν οριακές τιμές σε white box testing.
+	values = [] (the empty list)
+	values = [1, 2, 3]
+	values = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+	values = [0, 0, 1, 0, 0, 0, 0]
+
+3. Κάλυψη
+Αναφέρεται στην κάλυψη εντολών ενός κώδικα από test cases.
+Το επιθυμητό είναι να έχει ελεγχθεί κάθε γραμμή τουλάχιστον μια φορά από κάποιο test case.
+Υπάρχουν εργαλεία (EclEmma) που δείχνουν ποιές γραμμές κώδικα έχουν καλυφθεί από ένα test case και ποιές όχι.
+Άσκηση
+Έστω η κλάση:
+public class Hailstone {
+  public static void main(String[] args) {
+    int n = 3;
+    while (n != 1) {
+        if (n % 2 == 0) {
+            n = n / 2;
+        } else {
+            n = 3 * n + 1;
+        }
+    }
+  }
+}
+
+Όταν n=3 ποιά εντολή δεν θα εκτελεστεί;
+Όταν n=16 ποιά εντολή δεν θα εκτελεστεί;
+
+3. Unit Testing και Stubs
+Unit Testing είναι ο έλεγχος κάθε μεθόδου σε μια κλάση ή κάθε συνάρτησης. 
+Εναλλακτικά έχουμε το integration test που ελέγχει ένα ολόκληρο σετ από μεθόδους όπως μια ολόκληρη κλάση.
+Στο Unit Testing ο εντοπισμός του bug είναι ευκολότερος.
+Έστω οι παρακάτω 3 μέθοδοι.
+	public static String getWebPage(URL url) {...} 
+η οποία διαβάζει web pages από το διαδίκτυο.
+	public static List<String> extractWords(String s) { ... }
+η οποία κάνει εξαγωγή των λέξεων από τη σελίδες (web pages) που παίρνει από την getWebPage
+και τέλος η:
+	public static Map<String, Set<URL>> makeIndex(Set<URL> urls) { 
+    ...
+    for (URL url : urls) {
+        String page = getWebPage(url);
+        List<String> words = extractWords(page);
+        ...
+    }
+    ...
+} 
+η οποία ευρετηριοποιεί τις λέξεις.
+
+Στο test suite που θα φτιάξουμε θέλουμε μεμονομένα τεστ για κάθε μέθοδο, δηλαδή:
+	unit tests για την getWebPage() με τιμές διάφορα URLs
+	unit tests για την extractWords() με τιμές διάφορα strings
+	unit tests για την makeIndex() that test it on various sets of URLs
+
+Για να τρέξουμε για παράδειγμα την extractWords μεμονομένα, μπορούμε να την τρέξουμε με τιμές-παραμέτρους ελεγχόμενες. Αυτές οι τιμές λέγονται stubs.
+Το ίδιο μπορούμε να κάνουμε και για όποια άλλη μέθοδο.
+Για τις κλάσεις επίσης μπορούμε να δημιουργήσουμε δικά μας objects για τεστ και αυτά λέγονται mock objects.
+
+3. Automated Testing και Regression Testing
+Για το Automated Testing χρησιμοποιούμε ειδικά εργαλεία όπως το JUnit με το οποίο μπορούμε να τρέχουμε και να δοκιμάζουμε τα τεστ αυτόματα.
+Αρκεί τα τεστ να είναι σωστά ρυθμισμένα.
+Όταν βρεθεί ένα bug και κάνουμε τις αλλαγές θα πρέπει να ξανατρέξουμε όλα τα test cases για να βεβαιωθούμε ότι δεν πειράξαμε κάτι άλλο από την προηγούμενη έκδοση.
+Αυτό λέγεται Regression Testing. 
+Automated Testing και Regression Testing χρησιμοποιούνται σε συνδυασμό για καλύτερα αποτελέσματα.
+
+
+
+
+
