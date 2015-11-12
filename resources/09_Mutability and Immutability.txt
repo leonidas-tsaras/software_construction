@@ -1,0 +1,166 @@
+http://web.mit.edu/6.005/www/fa15/classes/09-immutability/
+
+1. Μεταβλητότητα (mutability) και αμεταβλητότητα (immutability)
+
+Αμετάβλητο θεωρείται ένα αντικείμενο το οποίο δεν περιέχει μεθόδους που θα μπορούσαν να αλλάξουν την τιμή ή τις τιμές του αντικειμένου.
+Για παράδειγμα, το αντικείμενο String είναι ένα αμετάβλητου τύπου αντικείμενο αφού δεν περιέχει μεθόδους που μπορούν να αλλάξουν την τιμή του. Για να αλλάξει η τιμή του πρέπει να καταχωρηθεί στην ίδια μεταβλητή μια νέα τιμή. Προσοχή: Αμετάβλητο δεν σημαίνει const.
+
+Παράδειγμα
+
+String s = "abc";
+s = s.concat("def");  //εδώ η concat επιστρέφει μια νέα τιμή η οποία καταχωρείται στην s.
+
+Αντίθετα το αντικείμενο StringBuilder είναι μεταβλητού τύπου αντικείμενο αφού περιέχει μεθόδους όπως 
+append, insert, reverse κ.λπ. που μπορούν να αλλάξουν την αρχική τιμή του αντικειμένου. Οι μέθοδες αυτές δεν επιστρέφουν ένα αποτέλεσμα αλλά αλλάζουν "εσωτερικά" την τιμή του αντικειμένου.
+
+Παράδειγμα
+
+StringBuilder sb = new StringBuilder("abc");
+sb.append("def");
+
+2. Τι να επιλέξω
+Τα αμετάβλητα αντικείμενα είναι πιο ασφαλή, κατανοητά και εύκολα στις αλλαγές. 
+Τα μεταβλητά είναι πιο ευέλικτα και πιο γρήγορα στην εκτέλεση πράξεων.
+Τα μεταβλητά δεν είναι τόσο ασφαλή όταν έχουμε πολλαπλές αναφορές σε ένα αντικείμενο.
+
+Παράδειγμα
+
+Έστω η μέθοδος
+/** @return the sum of the numbers in the list */
+public static int sum(List<Integer> list) {
+    int sum = 0;
+    for (int x : list)
+        sum += x;
+    return sum;
+}
+
+και η μέθοδος
+/** @return the sum of the absolute values of the numbers in the list */
+public static int sumAbsolute(List<Integer> list) {
+    // τη συνδυάζουμε με τη sum()
+    for (int i = 0; i < list.size(); ++i)
+        list.set(i, Math.abs(list.get(i)));
+    return sum(list);
+}
+
+τι θα προκύψει μετά την εκτέλεση της main;
+// meanwhile, somewhere else in the code...
+public static void main(String[] args) {
+    // ...
+    List<Integer> myData = Arrays.asList(-5, -3, -2);
+    System.out.println(sumAbsolute(myData));
+    System.out.println(sum(myData));
+}
+
+Παράδειγμα
+
+Έστω η μέθοδος
+/** @return the first day of spring this year */
+public static Calendar startOfSpring() {
+    return askGroundhog();
+}
+
+και η μέθοδος
+// somewhere else in the code...
+public static void partyPlanning() {
+    Calendar partyDate = startOfSpring();
+    // ...
+}
+
+Ο προγραμματιστής αποφασίζει να κάνει cash την partyDate επειδή καλείται πολλές φορές.
+Έτσι, δημιουργεί την private static Calendar groundhogAnswer.
+/** @return the first day of spring this year */
+public static Calendar startOfSpring() {
+    if (groundhogAnswer == null) groundhogAnswer = askGroundhog();
+    return groundhogAnswer;
+}
+private static Calendar groundhogAnswer = null;
+
+Επίσης χρειάζεται να αλλαχτεί η partyPlanning και να επιστρέφεται η ημερομηνία έναν μήνα αργότερα.
+Έτσι έχουμε:
+
+// somewhere else in the code...
+public static void partyPlanning() {
+    // ας πάμε έναν μήνα αργότερα
+	Calendar partyDate = startOfSpring();
+	partyDate.set(Calendar.MONTH, partyDate.get(Calendar.MONTH) + 1);
+    // ...τι συμβαίνει;
+}
+
+Γενικά, τα λάθη παρουσιάζονται όταν ένα μεταβλητό αντικείμενο έχει πολλές αναφορές (references) ή aliases.
+Γι'αυτό είναι καλό να κρατάμε τα μεταβλητά αντικείμενα μέσα σε μια μέθοδο.
+
+2. Iterator 
+Ένα άλλο μεταβλητό αντικείμενο είναι το Iterator. Το Iterator περιέχει δύο μεθόδους: 
+
+- next() Επιστρέφει το επόμενο στοιχείο από μια συλλογή
+- hasNext() Ελέγχει αν υπάρχει επόμενο στοιχείο στη συλλογή
+
+Στο παρακάτω παράδειγμα μπορούμε να δούμε κάποια λάθη;
+Μπορούμε να βελτιώσουμε τις προ-συνθήκες και μετά-συνθήκες;
+
+import java.util.ArrayList;
+
+/**
+ * A MyIterator is a mutable object that iterates over
+ * the elements of an ArrayList<String>, from first to last.
+ * This is just an example to show how an iterator works.
+ * In practice, you should use the ArrayList's own iterator
+ * object, returned by its iterator() method.
+ */
+public class MyIterator {
+
+    private final ArrayList<String> list;
+    private int index;
+    // list[index] is the next element that will be returned
+    //   by next()
+    // index == list.size() means no more elements to return
+
+    /**
+     * Make an iterator.
+     * @param list list to iterate over
+     */
+    public MyIterator(ArrayList<String> list) {
+        this.list = list;
+        this.index = 0;
+    }
+
+    /**
+     * Test whether the iterator has more elements to return.
+     * @return true if next() will return another element,
+     *         false if all elements have been returned
+     */
+    public boolean hasNext() {
+        return index < list.size();
+    }
+
+    /**
+     * Get the next element of the list.
+     * Requires: hasNext() returns true.
+     * Modifies: this iterator to advance it to the element 
+     *           following the returned element.
+     * @return next element of the list
+     */
+    public String next() {
+        final String element = list.get(index);
+        ++index;
+        return element;
+    }
+}
+
+2. Μερικά αμετάβλητα και χρήσιμα αντικείμενα και τύποι δεδομένων.
+
+Όλοι οι πρωταρχικοί τύποι (primitive types) είναι αμετάβλητοι.
+Τα αντικείμενα BigInteger και BigDecimal είναι αμετάβλητα.
+Αντί για Date που είναι μεταβλητό μπορείτε να χρησιμοποιείτε την java.time
+Αν χρησιμοποιείτε συλλογές τότε ίσως είναι χρήσιμη η μέθοδος (Collections.unmodifiableList, Collections.unmodifiableSet, Collections.unmodifiableMap)
+
+2. Ερωτήσεις
+Σχετικά με τη μεταβλητότητα απαντήστε στις παρακάτω ερωτήσεις.
+
+1. Μια κλάση είναι αμετάβλητη αν όλα τα πεδία της είναι final
+2. Μια κλάση είναι αμετάβλητη αν στιγμιότυπα (instances) αυτής παρουσιάζουν πάντα την ίδια τιμή.
+3. Στιγμιότυπα μιας αμετάβλητης κλάσης μπορούν να διαμοιραστούν με ασφάλεια.
+4. Η αμεταβλητότητα μπορεί να υλοποιηθεί μέσω defensive copying
+5. Η αμεταβλητότητα  μας επιτρέπει να αιτιολογούμε τις καθολικές (global) αντί για τις τοπικές (local) μεταβλητές
+
