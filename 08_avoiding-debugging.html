@@ -2,11 +2,206 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>Αποφεύγοντας την αποσφαλμάτωση (Avoiding Debugging)</title>
-		<!-- http://web.mit.edu/6.005/www/fa15/classes/06-specifications/ -->
+		<!-- http://web.mit.edu/6.005/www/fa15/classes/08-avoiding-debugging/ -->
     <link href="main.css" rel="stylesheet" type="text/css" />
 	</head>
 	<body>
 		<h1>Αποφεύγοντας την αποσφαλμάτωση (Avoiding Debugging)</h1>
+		<p>Το κεφάλαιο της αποσφαλμάτωσης (Debugging) είναι μεγάλο αλλά εδώ θα δούμε τα βασικά που πρέπει πάντα
+ να εφαρμόζουμε.</p>
+		<h2>Πρώτη άμυνα</h2>
+		<ul>
+			<li>Χρησιμοποιούμε πλαίσιο εργασίας (framework) με ισχυρό στατικό έλεγχο (static checking) και επίσης προσπαθούμε να εμφανίσουμε όλα τα λάθη μέσα από το δυναμικό έλεγχο (dynamic checking).</li>
+			<li>Ανοσία (immunity), με την έννοια ότι μεταβλητές και μέθοδοι που δεν αλλάζουν ή δεν πρέπει να αλλάξουν με κάποιον τρόπο είναι καλό να τις χαρακτηρίζουμε ως final.</li>
+		</ul>
+		<h2>Δεύτερη άμυνα (εντοπισμός σε περιορισμένο χώρο)</h2>
+		<ul>
+			<li>Προσπαθούμε να εντοπίσουμε τα λάθη σε έναν περιορισμένο χώρο όπως μια μέθοδος ή έστω μια κλάση. Όσο πιο μικρός είναι ο χώρος που ψάχνουμε τόσο πιο γρήγορα θα εντοπίσουμε το λάθος.</li>
+			<li>Γρήγορο λάθος. Αυτό γίνεται στην αρχή με το πρώτο 'τρέξιμο' και δοκιμάζοντας οριακές τιμές έτσι ώστε αν γίνεται να εμφανιστεί το λάθος όσο πιο νωρίς. Αν δεν εντοπιστεί νωρίς μπορεί στη συνέχεια η αποσφαλμάτωση να είναι δυσκολότερη.</li>
+		</ul>
+
+		<h2>Assertions</h2>
+		<p>Με τη χρήση της εντολής assert μπορούμε να ελέγξουμε τιμές μεταβλητών και να βγάλουμε συμπεράσματα για τη σωστή ή όχι λειτουργία του κώδικα.</p>
+		<p>Η assert συντάσεται με δύο τρόπους:</p>
+		<ul>
+			<li>assert(συνθήκη);<br>Αν η συνθήκη είναι ψευδής (false) τότε πετάει μια εξαίρεση (AssertionError).</li>
+			<li>assert(συνθήκη) : (τιμή ή μήνυμα);<br>Αν η συνθήκη είναι ψευδής (false) τότε πετάει μια εξαίρεση (AssertionError) και την τιμή ή το μήνυμα που ακολουθεί την εξαίρεση.</li>
+		</ul>
+
+		<h5>Προσοχή</h5>
+		<p>Πρέπει να έχει ενεργοποιηθεί ο μηχανισμός του Assertion στο περιβάλλον που εργάζεστε.</p>
+
+		<h3>Τι δεν πρέπει να κάνετε assert</h3>
+		<p>Μην ελέγχετε συνθήκες που είναι εκτός κώδικα όπως το άνοιγμα ενός αρχείου. Τα assert τα χρησιμοποιούμε για να εντοπίσουμε λάθη που εμείς κάνουμε.</p>
+		<p>Ποτέ δεν χρησιμοποιούμε τα assert ως μέρος του προγράμματος.</p>
+		<h5>Παράδειγμα</h5>
+		<pre>
+			// μην το κάνεις αυτό
+			assert list.remove(x);
+		</pre>
+		<p>αντίθετα γράψτε:</p>
+
+		<pre>
+			boolean found = list.remove(x);
+			assert found;
+		</pre>
+
+		<h2>Τμηματική ή μερική ανάπτυξη (Incremental Development)</h2>
+		<p>Με την τεχνική αυτή κάθε φορά που γράφεται μια μικρή ενότητα κώδικα κάνετε και το σχετικό τεστ. Αν υπάρχει λάθος θα πρέπει να υπαρχει στην τελευταία ενότητα (κατά κανόνα).</p>
+		<p>Δείτε επίσης κεφάλαιο 03 σχετικά με Unit testing και Regression testing.</p>
+
+
+		<h2>Δομικότητα (Modularity)</h2>
+		<p>Γράφουμε κώδικα όσο το δυνατό σε μικρές και ανεξάρτητες δομικές μονάδες. Αυτό βοηθάει (εκτός των άλλων πλεονεκτημάτων) στο γρήγορο εντοπισμό του λάθους.</p>
+
+		<h2>Ενθυλάκωση (Encapsulation)</h2>
+		<p>Προσπαθούμε να έχουμε τα μέλη μιας κλάσης ή τα πεδία μιας μεθόδου όσο το δυνατό 'κρυφά' και μη προσβάσιμα από 'εξωτερικό' κώδικα.</p>
+		<p>Πιο συγκεκριμένα:</p>
+		<ul>
+			<li>Χρησιμοποιούμε public και private όπου χρειάζεται</li>
+			<li>Περιορίζουμε το πεδίο ισχύος (scope) στο ελάχιστο</li>
+			<li>Χρησιμοποιούμε μεταβλητές όταν χρειάζονται, κοντά στον κώδικα που χρησιμοποιούνται και για πολύ συγκεκριμένο λόγο ή λειτουργία</li>
+			<li>Αποφεύγουμε τις global μεταβλητές</li>
+		</ul>
+
+		<h2>Ασκήσεις</h2>
+		<h6>1. Ελέγξτε αν υπάρχει κάποιο λάθος στον παρακάτω κώδικα και τι παρατηρήσεις έχετε να κάνετε.</h6>
+		<pre>
+			final char[] v_s = new char[] { 'a', 'e', 'i', 'o', 'u' };
+			v_s = new char[] { 'x', 'y', 'z' }; 
+			v_s[0] = 'z';
+		</pre>
+
+		<h6>2. Έστω ο κώδικας:</h6>
+		<pre>
+			char v_0 = 'a';
+			final char v_1 = v_0;
+
+			String v_2 = v_1 + "eiou";
+			final String v_3 = v_2;
+
+			char[] v_4 = new char[] { v_0, 'e', 'i', 'o', 'u' };
+			final char[] v_5 = v_4;
+
+		</pre>
+		<p>Ποιά από τις παρακάτω γραμμές είναι σωστή αν προστεθεί στο τέλος.</p>
+		<pre>
+			v_0 = 'y';
+			v_1 = v_0;
+			v_2 = "uoie" + v_1;
+			v_3 = v_2;
+			v_2[0] = 'x';
+			v_3[0] = 'x';
+			v_4 = v_5;
+			v_5 = v_4;
+			v_4[0] = 'x';
+			v_5[0] = 'z';
+		</pre>
+
+		<h6>3. Έστω ο κώδικας:</h6>
+		<pre>
+			/**
+			 * @param x  requires x >= 0
+			 * @return approximation to square root of x
+			 */
+			public double sqrt(double x) {
+
+			}
+		</pre>
+		<p>προσθέστε ένα assert που θα ελέγχει αν το x είναι αρνητικό.</p>
+
+		<h6>4. Έστω η ημιτελής μέθοδος:</h6>
+		<pre>
+		/**
+		 * Solves quadratic equation ax^2 + bx + c = 0.
+		 * 
+		 * @param a quadratic coefficient, requires a != 0
+		 * @param b linear coefficient
+		 * @param c constant term
+		 * @return a list of the real roots of the equation
+		 */
+		public static List&lt;Double&gt; quadraticRoots(final int a, final int b, final int c) {
+		    List&lt;Double&gt; roots = new ArrayList&lt;Double&gt;();
+		    // A
+		    ... // compute roots        
+		    // B
+		    return roots;
+		}
+		</pre>
+
+		<p>Ποιά assert από τα παρακάτω μπορούν να περάσουν στην περιοχή Α.</p>
+		<ul>
+			<li>assert a != 0;</li>
+			<li>assert b != 0;</li>
+			<li>assert c != 0;</li>
+			<li>assert roots.size() &gt;= 0;</li>
+			<li>assert roots.size() &lt;= 2;</li>
+			<li>for (double x : roots) { assert Math.abs(a*x*x + b*x + c) &lt; 0.0001; }</li>
+		</ul>
+		<p>Ποιά assert από τα παρακάτω μπορούν να περάσουν στην περιοχή Β.</p>
+		<ul>
+			<li>assert a != 0;</li>
+			<li>assert b != 0;</li>
+			<li>assert c != 0;</li>
+			<li>assert roots.size() &gt;= 0;</li>
+			<li>assert roots.size() &lt;= 2;</li>
+			<li>for (double x : roots) { assert Math.abs(a*x*x + b*x + c) &lt; 0.0001; }</li>
+		</ul>
+		<h6>5. Έστω ο παρακάτω κώδικας (λείπουν κάποιες ματαβλητές)</h6>
+		<pre>
+		1 class Apartment {
+		2     Apartment(String newAddress) {
+		3         this.address = newAddress;
+		4         this.roommates = new HashSet&lt;Person&gt;();
+		5     }
+		6     
+		7     String getAddress() {
+		8         return address;
+		9     }
+		10    
+		11    void addRoommate(Person newRoommate) {
+		12        roommates.add(newRoommate);
+		13        if (roommates.size() &gt; MAXIMUM_OCCUPANCY) {
+		14            roommates.remove(newRoommate);
+		15            throw new TooManyPeopleException();
+		15        }
+		16    }
+		17    
+		18    void getMaximumOccupancy() {
+		19        return MAXIMUM_OCCUPANCY;
+		20    }
+		21 }
+		</pre>
+		<p>Ποιές από τις παρακάτω γραμμές είναι στο πεδίο ισχύος (scope) της μεταβλητής newRoommate;</p>
+		<ul>
+			<li>γραμμή 3</li>
+			<li>γραμμή 8</li>
+			<li>γραμμή 12</li>
+			<li>γραμμή 15</li>
+			<li>γραμμή 20</li>
+		</ul>
+		<p>Ποιό είναι το πεδίο ισχύος (scope) της μεταβλητής address (μη δηλωμένη στον κώδικα)</p>
+		<ul>
+			<li>γραμμές 2-21</li>
+			<li>γραμμές 3-4</li>
+			<li>γραμμή 8</li>
+			<li>γραμμές 12-16</li>
+		</ul>
+		<p>Ποιά από τις παρακάτω είναι η καλύτερη δήλωση για τη μεταβλητή roommates;</p>
+		<ul>
+			<li>List&lt;Person&gt; roommates;</li>
+			<li>Set&lt;Person&gt; roommates;</li>
+			<li>final Set&lt;Person&gt; roommates;</li>
+			<li>HashSet&lt;Person&gt; roommates;</li>
+		</ul>
+
+		<p>Ποιά από τις παρακάτω είναι η καλύτερη δήλωση για τη μεταβλητή MAXIMUM_OCCUPANCY;</p>
+		<ul>
+			<li>int MAXIMUM_OCCUPANCY = 8;</li>
+			<li>final int MAXIMUM_OCCUPANCY = 8;</li>
+			<li>static int MAXIMUM_OCCUPANCY = 8;</li>
+			<li>static final int MAXIMUM_OCCUPANCY = 8;</li>
+		</ul>
 
 	</body>
 </html>

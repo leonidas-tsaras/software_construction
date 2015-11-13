@@ -32,7 +32,7 @@ http://web.mit.edu/6.005/www/fa15/classes/08-avoiding-debugging/
 Ποτέ δεν χρησιμοποιούμε τα assert ως μέρος του προγράμματος.
 Παραδειγμα
 
-// don't do this:
+// μην το κάνεις αυτό
 assert list.remove(x);
 
 αντίθετα γράψτε:

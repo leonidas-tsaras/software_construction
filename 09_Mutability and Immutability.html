@@ -1,0 +1,185 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Μεταβλητότητα (mutability) και αμεταβλητότητα (immutability)</title>
+		<!-- http://web.mit.edu/6.005/www/fa15/classes/09-immutability/ -->
+    <link href="main.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+		<h1>Μεταβλητότητα (mutability) και αμεταβλητότητα (immutability)</h1>
+		<p>Αμετάβλητο θεωρείται ένα αντικείμενο το οποίο δεν περιέχει μεθόδους που θα μπορούσαν να αλλάξουν την τιμή ή τις τιμές του αντικειμένου.</p>
+		<p>Για παράδειγμα, το αντικείμενο String είναι ένα αμετάβλητου τύπου αντικείμενο αφού δεν περιέχει μεθόδους που μπορούν να αλλάξουν την τιμή του. Για να αλλάξει η τιμή του πρέπει να καταχωρηθεί στην ίδια μεταβλητή μια νέα τιμή. Προσοχή: Αμετάβλητο δεν σημαίνει const.</p>
+
+		<h5>Παράδειγμα</h5>
+		<pre>
+		String s = "abc";
+		s = s.concat("def");  //εδώ η concat επιστρέφει μια νέα τιμή η οποία καταχωρείται στην s.
+		</pre>
+
+		<p>Αντίθετα το αντικείμενο StringBuilder είναι μεταβλητού τύπου αντικείμενο αφού περιέχει μεθόδους όπως append, insert, reverse κ.λπ. που μπορούν να αλλάξουν την αρχική τιμή του αντικειμένου. Οι μέθοδες αυτές δεν επιστρέφουν ένα αποτέλεσμα αλλά αλλάζουν "εσωτερικά" την τιμή του αντικειμένου.</p>
+
+		<h5>Παράδειγμα</h5>
+		<pre>
+		StringBuilder sb = new StringBuilder("abc");
+		sb.append("def");
+		</pre>
+
+		<h2>Τι να επιλέξω</h2>
+		<p>Τα αμετάβλητα αντικείμενα είναι πιο ασφαλή, κατανοητά και εύκολα στις αλλαγές.</p>
+		<p>Τα μεταβλητά είναι πιο ευέλικτα και πιο γρήγορα στην εκτέλεση πράξεων.</p>
+		<p>Τα μεταβλητά δεν είναι τόσο ασφαλή όταν έχουμε πολλαπλές αναφορές σε ένα αντικείμενο.</p>
+
+		<h5>Παράδειγμα</h5>
+		<p>Έστω η μέθοδος</p>
+		<pre>
+		/** @return the sum of the numbers in the list */
+		public static int sum(List<Integer> list) {
+		    int sum = 0;
+		    for (int x : list)
+		        sum += x;
+		    return sum;
+		}
+		</pre>
+		<p>και η μέθοδος</p>
+		<pre>
+		/** @return the sum of the absolute values of the numbers in the list */
+		public static int sumAbsolute(List<Integer> list) {
+		    // τη συνδυάζουμε με τη sum()
+		    for (int i = 0; i < list.size(); ++i)
+		        list.set(i, Math.abs(list.get(i)));
+		    return sum(list);
+		}
+		</pre>
+
+		<p>τι θα προκύψει μετά την εκτέλεση της main;</p>
+		<pre>
+		public static void main(String[] args) {
+		    // ...
+		    List&lt;Integer&gt; myData = Arrays.asList(-5, -3, -2);
+		    System.out.println(sumAbsolute(myData));
+		    System.out.println(sum(myData));
+		}
+		</pre>
+
+		<h5>Παράδειγμα</h5>
+		<p>Έστω η μέθοδος</p>
+		<pre>
+		/** @return the first day of spring this year */
+		public static Calendar startOfSpring() {
+		    return askGroundhog();
+		}
+		</pre>
+		<p>και η μέθοδος</p>
+		<pre>
+		public static void partyPlanning() {
+		    Calendar partyDate = startOfSpring();
+		    // ...
+		}
+		</pre>
+
+		<p>Ο προγραμματιστής αποφασίζει να κάνει cash την partyDate επειδή καλείται πολλές φορές.Έτσι, δημιουργεί την private static Calendar groundhogAnswer.</p>
+		<pre>
+			/** @return the first day of spring this year */
+			public static Calendar startOfSpring() {
+			    if (groundhogAnswer == null) groundhogAnswer = askGroundhog();
+			    return groundhogAnswer;
+			}
+			private static Calendar groundhogAnswer = null;
+		</pre>
+
+		<p>Επίσης χρειάζεται να αλλαχτεί η partyPlanning και να επιστρέφεται η ημερομηνία έναν μήνα αργότερα.</p>
+		<p>Έτσι έχουμε:</p>
+
+		<pre>
+		public static void partyPlanning() {
+		    // ας πάμε έναν μήνα αργότερα
+			Calendar partyDate = startOfSpring();
+			partyDate.set(Calendar.MONTH, partyDate.get(Calendar.MONTH) + 1);
+		    // ...τι συμβαίνει;
+		}
+		</pre>
+
+		<p>Γενικά, τα λάθη παρουσιάζονται όταν ένα μεταβλητό αντικείμενο έχει πολλές αναφορές (references) ή aliases. Γι'αυτό είναι καλό να κρατάμε τα μεταβλητά αντικείμενα μέσα σε μια μέθοδο.</p>
+
+		<h2>Iterator</h2>
+		<p>Ένα άλλο μεταβλητό αντικείμενο είναι το Iterator. Το Iterator περιέχει δύο μεθόδους:</p>
+
+		<ul>
+			<li>next() Επιστρέφει το επόμενο στοιχείο από μια συλλογή</li>
+			<li>hasNext() Ελέγχει αν υπάρχει επόμενο στοιχείο στη συλλογή</li>
+		</ul>
+
+		<p>Στο παρακάτω παράδειγμα μπορούμε να δούμε κάποια λάθη;</p>
+		<p>Μπορούμε να βελτιώσουμε τις προ-συνθήκες και μετά-συνθήκες;</p>
+
+		<pre>
+		import java.util.ArrayList;
+
+		/**
+		 * A MyIterator is a mutable object that iterates over
+		 * the elements of an ArrayList&lt;String&gt;, from first to last.
+		 * This is just an example to show how an iterator works.
+		 * In practice, you should use the ArrayList's own iterator
+		 * object, returned by its iterator() method.
+		 */
+		public class MyIterator {
+
+		    private final ArrayList&lt;String&gt; list;
+		    private int index;
+		    // list[index] is the next element that will be returned
+		    //   by next()
+		    // index == list.size() means no more elements to return
+
+		    /**
+		     * Make an iterator.
+		     * @param list list to iterate over
+		     */
+		    public MyIterator(ArrayList&lt;String&gt; list) {
+		        this.list = list;
+		        this.index = 0;
+		    }
+
+		    /**
+		     * Test whether the iterator has more elements to return.
+		     * @return true if next() will return another element,
+		     *         false if all elements have been returned
+		     */
+		    public boolean hasNext() {
+		        return index &lt; list.size();
+		    }
+
+		    /**
+		     * Get the next element of the list.
+		     * Requires: hasNext() returns true.
+		     * Modifies: this iterator to advance it to the element 
+		     *           following the returned element.
+		     * @return next element of the list
+		     */
+		    public String next() {
+		        final String element = list.get(index);
+		        ++index;
+		        return element;
+		    }
+		}
+		</pre>
+
+		<h2>Μερικά χρήσιμα αμετάβλητα αντικείμενα και τύποι δεδομένων</h2>
+		<p>Όλοι οι πρωταρχικοί τύποι (primitive types) είναι αμετάβλητοι.</p>
+		<p>Τα αντικείμενα BigInteger και BigDecimal είναι αμετάβλητα.</p>
+		<p>Αντί για Date που είναι μεταβλητό μπορείτε να χρησιμοποιείτε την java.time</p>
+		<p>Αν χρησιμοποιείτε συλλογές τότε ίσως είναι χρήσιμη η μέθοδος (Collections.unmodifiableList, Collections.unmodifiableSet, Collections.unmodifiableMap)</p>
+
+		<h2>Ερωτήσεις</h2>
+		<p>Σχετικά με τη μεταβλητότητα απαντήστε στις παρακάτω ερωτήσεις:</p>
+		<ol>
+			<li>Μια κλάση είναι αμετάβλητη αν όλα τα πεδία της είναι final</li>
+			<li>Μια κλάση είναι αμετάβλητη αν στιγμιότυπα (instances) αυτής παρουσιάζουν πάντα την ίδια τιμή</li>
+			<li>Στιγμιότυπα μιας αμετάβλητης κλάσης μπορούν να διαμοιραστούν με ασφάλεια</li>
+			<li>Η αμεταβλητότητα μπορεί να υλοποιηθεί μέσω defensive copying</li>
+			<li>Η αμεταβλητότητα  μας επιτρέπει να αιτιολογούμε τις καθολικές (global) αντί για τις τοπικές (local) μεταβλητές</li>
+		</ol>
+
+	</body>
+</html>
+
+
