@@ -1,0 +1,67 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Exceptions</title>
+		<!--  -->
+    <link href="main.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+		<h1>Exceptions</h1>
+		<h2>Τα τρία είδη των εξαιρέσεων (Exceptions)</h2>
+		<h3>Checked exceptions</h3>
+		<p>Αναμενόμενα όπως το άνοιγμα ενός αρχείου που δεν υπάρχει στον δίσκο (java.io.FileNotFoundException). Τα Checked exceptions είναι υποχρεωτικό να πιάνονται (catch).</p>
+		<h3>Error exceptions</h3>
+		<p>Μη αναμενόμενα όπως η ανάγνωση ενός αρχείου που διακόπτεται λόγω προβλήματος δίσκου (java.io.IOError). Τα Error exceptions είναι προαιρετικό να πιάνονται (catch).</p>
+		<h3>Runtime exception</h3>
+		<p>Τα runtime exceptions προέρχονται από λάθη του προγράμματος και είναι μη αναμενόμενα. Για παράδειγμα το πέρασμα μια μεταβλητής με τιμή null. Τα runtime exceptions exceptions είναι προαιρετικό να πιάνονται (catch).</p>
+		<h3>Unchecked exceptions</h3>
+		<p>Τα Error και runtime exceptions λέγονται Unchecked exceptions.</p>
+
+		<h5>Άσκηση</h5>
+		<p>Διορθώστε την παρακάτω κλάση έτσι ώστε να τρέχει. Μπορείτε να χρησιμοποιήσετε δύο τρόπους.</p>
+<pre>
+// Note: This class will not compile yet.
+import java.io.*;
+import java.util.List;
+import java.util.ArrayList;
+
+public class ListOfNumbers {
+
+	private List&lt;Integer&gt; list;
+	private static final int SIZE = 10;
+
+	public ListOfNumbers () {
+		list = new ArrayList&lt;Integer&gt;(SIZE);
+		for (int i = 0; i &lt; SIZE; i++) {
+			list.add(new Integer(i));
+		}
+	}
+
+	public void writeList() {
+		// The FileWriter constructor throws IOException, which must be caught.
+		PrintWriter out = new PrintWriter(new FileWriter("OutFile.txt"));
+
+		for (int i = 0; i &lt; SIZE; i++) {
+			// The get(int) method throws IndexOutOfBoundsException, which must be caught.
+			out.println("Value at: " + i + " = " + list.get(i));
+		}
+		out.close();
+	}
+}
+</pre>
+
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

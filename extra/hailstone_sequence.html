@@ -1,0 +1,117 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Hailstone Sequence</title>
+		<!--  -->
+    <link href="main.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+		<h1>Hailstone σειρά</h1>
+		<p>Η σειρά hailstone παράγεται ως εξής:</p>
+		<p>Ξεκινάει με έναν αριθμό έστω n, αν ο αριθμός είναι ζυγός τότε n = n/2 διαφορετικά n = 3n+1.</p>
+		<p>Η διαδικασία συνεχίζεται μέχρι να καταλήξει στον αριθμό 1.</p>
+		<h5>Παραδείγματα</h5>
+<pre>
+2, 1
+3, 10, 5, 16, 8, 4, 2, 1
+4, 2, 1
+2n, 2n-1 , ... , 4, 2, 1
+5, 16, 8, 4, 2, 1
+7, 22, 11, 34, 17, 52, 6, 13, 40, ...? 
+</pre>
+
+		<h5>Παράδειγμα</h5>
+		<p>Στο παρακάτω διάγραμμα ροής περιγράφεται ο αλγόριθμος της σειράς</p>
+		<img src = '../images/hailstones.gif' />
+
+<pre>
+// Java
+int n = 3;
+while (n != 1) {
+	System.out.println(n);
+	if (n % 2 == 0) {
+		n = n / 2;
+	} else {
+		n = 3 * n + 1;
+	}
+}
+System.out.println(n);
+</pre>
+
+		<h5>Παράδειγμα</h5>
+		<p>Στο παρακάτω διάγραμμα ροής περιγράφεται ο αλγόριθμος της σειράς όπως αυτή παράγεται μετά από εισαγωγή αρχικής τιμής από χρήστη</p>
+		<img src = '../images/hailstones1.gif' />
+
+<pre>
+// Java
+int n;
+n = Integer.parseInt(JOptionPane.showInputDialog("δώσε αριθμό"));
+while (n != 1) {
+	System.out.println(n);
+	if (n % 2 == 0) {
+		n = n / 2;
+	} else {
+		n = 3 * n + 1;
+	}
+}
+System.out.println(n);
+</pre>
+
+		<h5>Παράδειγμα</h5>
+		<p>Ο αλγόριθμος με τη χρήση λίστας (List)</p>
+<pre>
+ArrayList list = new ArrayList();
+int n = 3;
+while (n != 1) {
+	list.add(n);
+	if (n % 2 == 0) {
+		n = n / 2;
+	} else {
+		n = 3 * n + 1;
+	}
+}
+list.add(n);
+
+//Iterating the list
+Iterator iterator = list.iterator();
+while(iterator.hasNext()) {
+	System.out.println(iterator.next());
+}
+</pre>
+		<h5>Παράδειγμα</h5>
+		<p>Ο αλγόριθμος με τη χρήση γενικής λίστας (Generic List) (List)</p>
+<pre>
+ArrayList&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();
+int n = 3;
+while (n != 1) {
+	list.add(n);
+	if (n % 2 == 0) {
+		n = n / 2;
+	} else {
+		n = 3 * n + 1;
+	}
+}
+list.add(n);
+
+//Iterating the list
+Iterator iterator = list.iterator();
+while(iterator.hasNext()) {
+	System.out.println(iterator.next());
+}
+</pre>
+
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
