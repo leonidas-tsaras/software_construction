@@ -7,19 +7,19 @@
   </head>
   <body>
     <h1>Τύποι δεδομένων</h1>
-    <p>Ο τύπος δεδομένων ορίζεται ως ένα σύνολο τιμών και ένα σύνολο πράξεων και που το αποτέλεσμα ανκει στο σύνολο τιμών.</p>
+    <p>Ο τύπος δεδομένων ορίζεται ως ένα σύνολο τιμών και ένα σύνολο πράξεων και που το αποτέλεσμα ανήκει στο σύνολο τιμών.</p>
     <p>Η Java έχει πρωταρχικούς τύπους (primitive types) τιμών όπως:</p>
     <ul>
-      <li>int (for integers like 5 and -200, but limited to the range ± 2^31, or roughly ± 2 billion)</li>
-      <li>long (for larger integers up to ± 2^63)</li>
-      <li>boolean (for true or false)</li>
-      <li>double (for floating-point numbers, which represent a subset of the real numbers)</li>
-      <li>char (for single characters like 'A' and '$')</li>
+      <li>int (ακέραιες τιμές όπως 5 και -200, μέχρι ± 2^31, ή περίπου ± 2 billion)</li>
+      <li>long (για ακέραιες τιμές μέχρι ± 2^63)</li>
+      <li>boolean (για true ή false)</li>
+      <li>double (για δεκαδικές τιμές)</li>
+      <li>char (για χαρακτήρες όπως 'A' και '$')</li>
     </ul>
     <p>Η Java έχει επίσης τύπους δεδομένων σε μορφή αντικειμένου όπως:</p>
     <ul>
-      <li>String represents a sequence of characters.</li>
-      <li>BigInteger represents an integer of arbitrary size.</li>
+      <li>String εκφράζει μια συμβολοσειρά.</li>
+      <li>BigInteger εκφράζει έναν ακέραιο για μεγάλες τιμές.</li>
     </ul>
     <p>Στη Java οι πρωταρχικοί τύποι γράφονται με πεζά γράμματα ενώ τα αντικείμενα-τύποι με κεφαλαίο το πρώτο (όπως οι κλάσεις).</p>
     <h2>Στατικός έλεγχος, δυναμικός έλεγχος και μη έλεγχος</h2>
@@ -38,7 +38,7 @@
       <li>Λάθος τιμές ορισμάτων (x/y όπου y=0)</li>
       <li>Λάθος τιμές επιστροφής</li>
       <li>Τιμές εκτός ορίων (int, πίνακες)</li>
-      <li>Κλήση ή αναφορά σε αντικείμενα null</li>
+      <li>Κλήση ή αναφορά σε αντικείμενα με τιμή null</li>
     </ul>
     <p>Γενικά στον στατικό έλεγχο το λάθος έχει σχέση με τον τύπο του ορίσματος ενώ στον δυναμικό με την τιμή του ορίσματος.</p>
     <p>Στον μη έλεγχο δεν πιάνεται κανένα λάθος.</p>
@@ -68,57 +68,68 @@
 
     <h5>Ασκήσεις</h5>
     <p>Ελέγξτε για δυναμικά, στατικά ή μη ελεγχόμενα λάθη στα παρακάτω παραδείγματα.</p>
-    <pre>
-      int n = 5;
-      if (n) {
-        n = n + 1;
-      }
-    </pre>
-    <pre>
-      int big = 200000; // 200,000
-      big = big * big;  // big should be 4 billion now
-    </pre>
-    <pre>
-      double probability = 1/5;
-    </pre>
-    <pre>
-      int sum = 0;
-      int n = 0;
-      int average = sum/n;
-    </pre>
-    <pre>
-      double sum = 7;
-      double n = 0;
-      double average = sum/n;
-    </pre>
-    <pre>
-      final int n = 5;
-      System.out.println(n++);
-    </pre>    
+
+
+<pre>
+<span class="res">int</span> n = 5;
+if (n) { //static
+    n = n + 1;
+}
+</pre>
+
+<pre>
+<span class="res">int</span> big = 200000; // 200,000
+big = big * big;  // δίνει 4 δισ.
+System.out.println(big); //1345294336
+</pre>
+
+<pre>
+double probability = 1/5;
+System.out.println(probability); //0.0
+</pre>
+
+<pre>
+<span class="res">int</span> sum = 0;
+<span class="res">int</span> n = 0;
+<span class="res">int</span> average = sum/n;
+System.out.println(average); //ArithmeticException
+</pre>
+
+<pre>
+double sum = 7;
+double n = 0;
+double average = sum/n;
+System.out.println(average); //Infinity
+</pre>
+
+<pre>
+final <span class="res">int</span> n = 5;
+System.out.println(n++);
+</pre>    
 
     <h5>To Hailstone σε μια κλάση</h5>
-    <pre>
-      public class Hailstone {
-        /**
-        * Compute a hailstone sequence.
-        * @param n  Starting number for sequence.  Assumes n > 0.
-        * @return hailstone sequence starting with n and ending with 1.
-        */
-        public static List<Integer> hailstoneSequence(int n) {
-          List<Integer> list = new ArrayList<Integer>();
-          while (n != 1) {
-            list.add(n);
-            if (n % 2 == 0) {
-              n = n / 2;
-            } else {
-              n = 3 * n + 1;
-            }
-          }
-          list.add(n);
-          return list;
-        }
+<pre>
+public class Hailstone {
+  /**
+  * Compute a hailstone sequence.
+  * @param n  Starting number for sequence.  Assumes n > 0.
+  * @return hailstone sequence starting with n and ending with 1.
+  */
+  public static List<Integer> hailstoneSequence(<span class="res">int</span> n) {
+    List<Integer> list = new ArrayList<Integer>();
+    while (n != 1) {
+      list.add(n);
+      if (n % 2 == 0) {
+        n = n / 2;
+      } else {
+        n = 3 * n + 1;
       }
-    </pre>
+    }
+    list.add(n);
+    return list;
+  }
+}
+</pre>
   </body>
 </html>
 

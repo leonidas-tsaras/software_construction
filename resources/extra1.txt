@@ -12,8 +12,8 @@ http://web.mit.edu/6.005/www/fa15/classes/01-static-checking/
 
 Η Java έχει επίσης τύπους δεδομένων σε μορφή αντικειμένου όπως:
 
-	String represents a sequence of characters.
-	BigInteger represents an integer of arbitrary size.
+	String εκφράζει μια συμβολοσειρά.
+	BigInteger εκφράζει έναν ακέραιο για μεγάλες τιμές.
 
 Στη Java οι πρωταρχικοί τύποι γράφονται με πεζά γράμματα ενώ τα αντικείμενα-τύποι με κεφαλαίο το πρώτο (όπως οι κλάσεις).
 
