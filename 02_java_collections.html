@@ -1,0 +1,273 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Java Collections</title>
+    <!-- http://web.mit.edu/6.005/www/fa15/classes/01-static-checking/ -->
+    <link href="main.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <h1>Γενικοί τύποι (Generic Types) </h1>
+    <h2>Εισαγωγή</h2>
+    <section>
+    <p>Ένας γενικός τύπος είναι μια κλάση ή μια διεπαφή παραμετροποιημένη. Άρα μπορώ να έχω γενική κλάση ή γενική διεπαφή.</p>
+    <p>Οι γενικοί τύποι προσθέτουν σταθερότητα και κάνουν τα bugs ανιχνεύσιμα.</p>
+    <p>Πιο ειδικά:</p>
+    <ol>
+      <li>Ισχυρό type check τη φάση της μεταγλώττισης</li>
+      <li>Απαλλαγή από τα cast</li>
+      <li>Δυνατότητα προγραμματισμού με γενικούς αλγόριθμους που είναι "type safe" και πιο ευανάγνωστοι</li>
+    </ol>
+    </section>
+    <h3>Παράδειγμα με απλή κλάση.</h3>
+    <section>
+      <p>Στο παρακάτω παράδειγμα μπορεί να κληθεί η get και set αλλά τα Objects που διαχειρίζονται να είναι διαφορετικού τύπου. Άρα δεν μπορεί να υπάρξει έλεγχος κατά τη μεταγλώτιση.</p>
+<pre>
+public class Box {
+  private Object object;
+  public void set(Object object) { 
+    this.object = object;
+  }
+  
+  public Object get() { 
+    return object; 
+  }
+}
+</pre>
+    </section>
+
+    <h3>Παράδειγμα με γενική κλάση.</h3>
+    <section>
+    <p>Με τη γενική κλάση αυστηροποιείται η παράμετρος του Object ή των Objects (αφού η γενική κλάση μπορεί να πάρει παραπάνω από μία παράμετρο).</p>
+<pre>
+public class Box&lt;T&gt; {
+  private T t;
+  public void set(T t) { 
+    this.t = t; 
+  }
+  public T get() {
+    return t;
+  }
+}
+</pre>
+    </section>
+
+    <h2>Ονοματολογία παραμέτρων</h2>
+    <section>
+      <p>Συμβατικά, χρησιμοποιούμε κεφαλαία γράμματα για να συμβολίσουμε τις παραμέτρους.</p>
+      <p>Τα ποιό κοινά γράμματα είναι:</p>
+      <ul>
+        <li>E για Element</li>
+        <li>K για Key</li>
+        <li>N για Number</li>
+        <li>T για Type</li>
+        <li>V για Value</li>
+        <li>S,U,V, ... - για άλλους τύπους</li>
+      </ul>
+    </section>
+
+    <h3>Παράδειγμα με πολλές παραμέτρους</h3>
+    <section>
+<pre>
+public interface Pair&lt;K, V&gt; {
+    public K getKey();
+    public V getValue();
+}
+
+public class OrderedPair&lt;K, V&gt; implements Pair&lt;K, V&gt; {
+
+  private K key;
+  private V value;
+
+  public OrderedPair(K key, V value) {
+    this.key = key;
+    this.value = value;
+  }
+
+  public K getKey() { return key; }
+  public V getValue() { return value; }
+}
+</pre>
+      <p>Για να δημιουργήσετε αντικείμενα από την παραπάνω κλάση γράφετε:</p>
+<pre>
+Pair&lt;String, Integer&gt; p1 = new OrderedPair&lt;String, Integer&gt;("Even", 8);
+Pair&lt;String, String&gt;  p2 = new OrderedPair&lt;String, String&gt;("hello", "world");
+</pre>
+      <p>ή ποιό σύντομα:</p>
+<pre>
+OrderedPair&lt;String, Integer&gt; p1 = new OrderedPair&lt;&gt;("Even", 8);
+OrderedPair&lt;String, String&gt;  p2 = new OrderedPair&lt;&gt;("hello", "world");
+</pre>     
+    </section>
+
+    <h2>Γενικές μέθοδες (Generic Methods)</h2>
+    <section>
+      <p>Όπως και με τις γενικές κλάσεις, εισάγουν γενικού τύπου παράμετρες. Επιτρέπονται οι static και οι μη static γενικές μέθοδες όπως και οι γενικοί δημιουργοί.</p>
+      <p>Οι παράμετρες δηλώνονται πριν τον τύπο επιστροφής για τις μεθόδους που επιστρέφουν κάτι.</p>
+    </section>
+    <h3>Παράδειγμα</h3>
+    <section>
+<pre>
+public class Util {
+  public static &lt;K, V&gt; boolean compare(Pair&lt;K, V&gt; p1, Pair&lt;K, V&gt; p2) {
+    return p1.getKey().equals(p2.getKey()) && p1.getValue().equals(p2.getValue());
+  }
+}
+
+public class Pair&lt;K, V&gt; {
+
+  private K key;
+  private V value;
+
+  public Pair(K key, V value) {
+    this.key = key;
+    this.value = value;
+  }
+
+  public void setKey(K key) { 
+    this.key = key;
+   }
+  public void setValue(V value) {
+     this.value = value; 
+  }
+  public K getKey()   { 
+    return key; 
+  }
+  public V getValue() { 
+    return value; 
+  }
+}
+</pre>
+    <p>Μπορείς να καλέσεις μια μέθοδο όπως:</p>
+<pre>
+Pair&lt;Integer, String&gt; p1 = new Pair&lt;&gt;(1, "apple");
+Pair&lt;Integer, String&gt; p2 = new Pair&lt;&gt;(2, "pear");
+boolean same = Util.&lt;Integer, String&gt;compare(p1, p2);
+</pre>
+      <p>ή πιο σύντομα:</p>
+<pre>
+Pair&lt;Integer, String&gt; p1 = new Pair&lt;&gt;(1, "apple");
+Pair&lt;Integer, String&gt; p2 = new Pair&lt;&gt;(2, "pear");
+boolean same = Util.compare(p1, p2);
+</pre>
+    </section>
+
+    <h1>Java Collections</h1>
+    <h2>Εισαγωγή</h2>
+    <section>
+      <p>Εκτός από τα  arrays τα οποία περιέχουν ορισμένου μήκους στοιχεία (τιμές ή αντικείμενα), η Java παρέχει και μια σειρά ισχυρών και ευέλικτων διεπαφών (Interface) και κλάσεων (Class) για τη διαχείριση συλλογών αντικειμένων. Η σειρά αυτή λέγεται Java Collections Framework.</p>
+      <p>Οι Βασικές διεπαφές είναι οι List, Set και  Map.</p>
+    </section>
+
+    <h2>List</h2>
+    <section>
+      <p>Η List περιέχει μια διατεταγμένη συλλογή από μηδέν ή περισσότερα αντικείμενα και ένα αντικείμενο μπορεί να εμφανιστεί πολλές φορές. Μπορούμε ελεύθερα να προσθέτουμε και να αφαιρούμε από μια List.</p>
+    </section>
+
+    <h3>List (Interface List&lt;E&gt;)</h3>
+    <section>
+      <p>Κάνει extend τις:  Collection&lt;E&gt;, Iterable&lt;E&gt;</p>
+      <p>Γίνεται implemented από: AbstractList, AbstractSequentialList, ArrayList, AttributeList, CopyOnWriteArrayList, LinkedList, RoleList, RoleUnresolvedList, Stack, Vector</p>
+    </section>
+
+    <h4>Παράδειγμα</h4>
+    <section>
+<pre>
+import java.util.*;
+
+public class ListExample {
+   public static void main(String[] args) {
+      List&lt;String&gt;  a1 = new ArrayList&lt;String&gt;();
+      a1.add("ΕΛΕΝΗ");
+      a1.add("ΗΡΩ");
+      a1.add("ΙΑΣΩΝ");
+      System.out.println(" ArrayList Elements");
+      System.out.print("\t" + a1);
+
+      List&lt;String&gt;  l1 = new LinkedList&lt;String&gt;();
+      l1.add("ΕΛΕΝΗ");
+      l1.add("ΗΡΩ");
+      l1.add("ΙΑΣΩΝ");
+      System.out.println();
+      System.out.println(" LinkedList Elements");
+      System.out.print("\t" + l1);
+   }
+}
+</pre>  
+    </section>
+
+    <h2>Set</h2>
+    <section>
+      <p>Το Set είναι μια συλλογή από μηδέν ή περισσότερα ανόμοια μεταξύ τους αντικείμενα. Μοιάζει με το μαθηματικό σύνολο (set).</p>
+      <p>Πιο τυπικά: Ένα set δεν περιέχει ζεύγος στοιχείων e1 και e2 όπου e1.equals(e2) και μπορεί να περιέχει μέχρι ένα στοιχείο null.</p>
+      <p>Κάνει extend τις: Collection&lt;E&gt;, Iterable&lt;E&gt; </p>
+      <p>Γίνεται extended από: NavigableSet&lt;E&gt;, SortedSet&lt;E&gt;</p>
+      <p>Γίνεται implemented από: AbstractSet, ConcurrentHashMap.KeySetView, ConcurrentSkipListSet, CopyOnWriteArraySet, EnumSet, HashSet, JobStateReasons, LinkedHashSet, TreeSet </p>
+    </section>
+    <h3>Set (Interface Set&lt;E&gt;)</h3>
+    <section>
+      <p>Κάνει extend τις: Collection&lt;E&gt;, Iterable&lt;E&gt;</p>
+      <p>Γίνεται extended από: NavigableSet&lt;E&gt;, SortedSet&lt;E&gt;</p>
+      <p>Γίνεται implemented από: AbstractSet, ConcurrentHashMap.KeySetView, ConcurrentSkipListSet, CopyOnWriteArraySet, EnumSet, HashSet, JobStateReasons, LinkedHashSet, TreeSet</p>
+    </section>
+    <h4>Παράδειγμα</h4>
+    <section>
+<pre>
+import java.util.*;
+
+public class SetExample {
+
+   public static void main(String args[]) { 
+      int count[] = {34, 22,10,60,30,22};
+      Set&lt;Integer&gt; set = new HashSet&lt;Integer&gt;();
+      try{
+         for(int i = 0; i&lt;5; i++){
+            set.add(count[i]);
+         }
+         System.out.println(set);
+
+         TreeSet&lt;Integer&gt;  sortedSet = new TreeSet&lt;Integer&gt;(set);
+         System.out.println("The sorted list is:");
+         System.out.println(sortedSet);
+
+         System.out.println("The First element of the set is: "+
+         (Integer)sortedSet.first());
+         System.out.println("The last element of the set is: "+
+         (Integer)sortedSet.last());
+      }
+      catch(Exception e){}
+   }
+} 
+</pre>
+      </section>
+
+    <h2>Map</h2>
+    <section>
+      <p>Μοιάζει με τον τηλ. κατάλογο. Υπάρχει το όνομα (key) και το τηλέφωνο (value).</p>
+      <p>Σε ένα Map, για κάθε key υπάρχει ένα value και δεν μπορεί να υπάρχουν διπλά κλειδιά.</p>
+    </section>
+
+    <h3>Map (Interface Map&lt;K, V&gt;)</h3>
+    <section>
+      <p>Γίνεται extended από: Bindings, ConcurrentMap&lt;K,V&gt;, ConcurrentNavigableMap&lt;K,V&gt;, LogicalMessageContext, MessageContext, NavigableMap&lt;K,V&gt;, SOAPMessageContext, SortedMap&lt;K,V&gt;</p>
+      <p>Γίνεται implemented από: AbstractMap, Attributes, AuthProvider, ConcurrentHashMap, ConcurrentSkipListMap, EnumMap, HashMap, Hashtable, IdentityHashMap, LinkedHashMap, PrinterStateReasons, Properties, Provider, RenderingHints, SimpleBindings, TabularDataSupport, TreeMap, UIDefaults, WeakHashMap</p>
+    </section>
+    <h4>Παράδειγμα</h4>
+    <section>
+<pre>
+import java.util.*;
+
+public class MapExample {
+   public static void main(String[] args) {
+      Map&lt;String, Integer&gt; m1 = new HashMap&lt;String, Integer&gt; (); 
+      m1.put("ΕΛΕΝΗ", 8);
+      m1.put("ΗΡΩ", 31);
+      m1.put("ΙΑΣΩΝ", 12);
+      m1.put("ΟΡΕΣΤΗΣ", 14);
+      System.out.println();
+      System.out.println(" Map Elements");
+      System.out.print("\t" + m1);
+   }
+}
+</pre>
+  </body>
+</html>

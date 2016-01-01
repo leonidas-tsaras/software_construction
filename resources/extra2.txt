@@ -1,8 +1,305 @@
 http://web.mit.edu/6.005/www/fa15/classes/02-basic-java/
 
+Γενικές μέθοδες (Generic Methods)
+Όπως και με τις γενικές κλάσεις, εισάγουν γενικού τύπου παράμετρες. Επιτρέπονται οι static και οι μη static γενικές μέθοδες όπως και οι γενικοί δημιουργοί.
+Οι παράμετρες δηλώνονται πριν τον τύπο επιστροφής για τις μεθόδους που επιστρέφουν κάτι.
+Παράδειγμα
+
+public class Util {
+	public static <K, V> boolean compare(Pair<K, V> p1, Pair<K, V> p2) {
+		return p1.getKey().equals(p2.getKey()) && p1.getValue().equals(p2.getValue());
+	}
+}
+
+public class Pair<K, V> {
+
+	private K key;
+	private V value;
+
+	public Pair(K key, V value) {
+		this.key = key;
+		this.value = value;
+	}
+
+	public void setKey(K key) { 
+		this.key = key;
+	 }
+	public void setValue(V value) {
+		 this.value = value; 
+	}
+	public K getKey()   { 
+		return key; 
+	}
+	public V getValue() { 
+		return value; 
+	}
+}
+
+Μπορείς να καλέσεις μια μέθοδο όπως:
+Pair<Integer, String> p1 = new Pair<>(1, "apple");
+Pair<Integer, String> p2 = new Pair<>(2, "pear");
+boolean same = Util.<Integer, String>compare(p1, p2);
+
+ή πιο σύντομα:
+Pair<Integer, String> p1 = new Pair<>(1, "apple");
+Pair<Integer, String> p2 = new Pair<>(2, "pear");
+boolean same = Util.compare(p1, p2);
+
+
+
+Γενικοί τύποι (Generic Types) 
+Ένας γενικός τύπος είναι μια κλάση ή μια διεπαφή παραμετροποιημένη. Άρα μπορώ να έχω γενική κλάση ή γενική διεπαφή.
+Οι γενικοί τύποι προσθέτουν σταθερότητα και κάνουν τα bugs ανιχνεύσιμα.
+Πιο ειδικά:
+1. Ισχυρό type check τη φάση της μεταγλώττισης.
+2. Απαλλαγή από τα cast.
+3. Δυνατότητα προγραμματισμού με γενικούς αλγόριθμους που είναι "type safe" και πιο ευανάγνωστοι.
+
+Παράδειγμα με απλή κλάση.
+Στο παρακάτω παράδειγμα μπορεί να κληθεί η get και set αλλά τα Objects που διαχειρίζονται να είναι διαφορετικού τύπου. Άρα δεν μπορεί να υπάρξει έλεγχος κατά τη μεταγλώτιση.
+
+public class Box {
+    private Object object;
+    public void set(Object object) { 
+	this.object = object;
+	
+    public Object get() { 
+	return object; 
+	}
+}
+
+
+Παράδειγμα με γενική κλάση.
+Με τη γενική κλάση αυστηροποιείται η παράμετρος του Object ή των Objects αφού η γενική κλάση μπορεί να πάρει παραπάνω από μία παράμετρο.
+
+public class Box<T> {
+    private T t;
+    public void set(T t) { 
+	this.t = t; 
+	}
+    public T get() {
+	 return t;
+	 }
+}
+
+Ονοματολογία παραμέτρων
+Συμβατικά, χρησιμοποιούμε κεφαλαία γράμματα για να συμβολίσουμε τις παραμέτρους.
+Τα ποιό κοινά γράμματα είναι:
+E για Element
+K για Key
+N για Number
+T για Type
+V για Value
+S,U,V, ... - για άλλους τύπους
+
+Παράδειγμα με πολλές παραμέτρους
+public interface Pair<K, V> {
+    public K getKey();
+    public V getValue();
+}
+
+public class OrderedPair<K, V> implements Pair<K, V> {
+
+    private K key;
+    private V value;
+
+    public OrderedPair(K key, V value) {
+	this.key = key;
+	this.value = value;
+    }
+
+    public K getKey()	{ return key; }
+    public V getValue() { return value; }
+}
+
+Για να δημιουργήσετε αντικείμενα από την παραπάνω κλάση γράφετε:
+
+Pair<String, Integer> p1 = new OrderedPair<String, Integer>("Even", 8);
+Pair<String, String>  p2 = new OrderedPair<String, String>("hello", "world");
+
+ή ποιό σύντομα:
+OrderedPair<String, Integer> p1 = new OrderedPair<>("Even", 8);
+OrderedPair<String, String>  p2 = new OrderedPair<>("hello", "world");
+
+
+
+
 Java Collections
 Lists, Sets, and Maps
 
 Generics: declaring List, Set, and Map variables
 
 κ.λπ.
+
+Εισαγωγή στα Java Collections
+Εκτός από τα  arrays τα οποία περιέχουν ορισμένου μήκους στοιχεία (τιμές ή αντικείμενα), η Java παρέχει και μια σειρά ισχυρών και ευέλικτων διεπαφών (Interface) και κλάσεων (Class) για τη διαχείριση συλλογών αντικειμένων. Η σειρά αυτή λέγεται Java Collections Framework.
+Οι Βασικές διεπαφές είναι οι List, Set και  Map.
+List
+Η List περιέχει μια διατεταγμένη συλλογή από μηδέν ή περισσότερα αντικείμενα και ένα αντικείμενο μπορεί να εμφανιστεί πολλές φορές. Μπορούμε ελεύθερα να προσθέτουμε και να αφαιρούμε από μια List.
+
+Set
+Το Set είναι μια συλλογή από μηδέν ή περισσότερα ανόμοια μεταξύ τους αντικείμενα. Μοιάζει με το μαθηματικό σύνολο (set). 
+Πιο τυπικά: Ένα set δεν περιέχει ζεύγος στοιχείων e1 και e2 όπου e1.equals(e2) και μέχρι ένα στοιχείο null.
+
+Map
+Μοιάζει με τον τηλ. κατάλογο. Υπάρχει το όνομα (key) και το τηλέφωνο (value). 
+Σε ένα Map, για κάθε key υπάρχει ένα value και δεν μπορεί να υπάρχουν διπλά κλειδιά.
+
+List (Interface List<E>)
+Κάνει extend τις:  Collection<E>, Iterable<E>
+Γίνεται implemented από:
+AbstractList, AbstractSequentialList, ArrayList, AttributeList, CopyOnWriteArrayList, LinkedList, RoleList, RoleUnresolvedList, Stack, Vector 
+
+Παράδειγμα
+import java.util.*;
+
+public class CollectionsExample {
+   public static void main(String[] args) {
+      List<String>  a1 = new ArrayList<String>();
+      a1.add("ΕΛΕΝΗ");
+      a1.add("ΗΡΩ");
+      a1.add("ΙΑΣΩΝ");
+      System.out.println(" ArrayList Elements");
+      System.out.print("\t" + a1);
+
+      List<String>  l1 = new LinkedList<String>();
+      l1.add("ΕΛΕΝΗ");
+      l1.add("ΗΡΩ");
+      l1.add("ΙΑΣΩΝ");
+      System.out.println();
+      System.out.println(" LinkedList Elements");
+      System.out.print("\t" + l1);
+   }
+}
+
+Set (Interface Set<E>)
+Κάνει extend τις: Collection<E>, Iterable<E> 
+Γίνεται extended από: NavigableSet<E>, SortedSet<E>
+Γίνεται implemented από: AbstractSet, ConcurrentHashMap.KeySetView, ConcurrentSkipListSet, CopyOnWriteArraySet, EnumSet, HashSet, JobStateReasons, LinkedHashSet, TreeSet 
+
+Παράδειγμα
+import java.util.*;
+
+public class SetExample {
+
+   public static void main(String args[]) { 
+      int count[] = {34, 22,10,60,30,22};
+      Set<Integer> set = new HashSet<Integer>();
+      try{
+         for(int i = 0; i<5; i++){
+            set.add(count[i]);
+         }
+         System.out.println(set);
+
+         TreeSet<Integer>  sortedSet = new TreeSet<Integer>(set);
+         System.out.println("The sorted list is:");
+         System.out.println(sortedSet);
+
+         System.out.println("The First element of the set is: "+
+         (Integer)sortedSet.first());
+         System.out.println("The last element of the set is: "+
+         (Integer)sortedSet.last());
+      }
+      catch(Exception e){}
+   }
+} 
+
+
+Map (Interface Map<K, V>)
+Γίνεται extended από: Bindings, ConcurrentMap<K,V>, ConcurrentNavigableMap<K,V>, LogicalMessageContext, MessageContext, NavigableMap<K,V>, SOAPMessageContext, SortedMap<K,V>
+Γίνεται implemented από: AbstractMap, Attributes, AuthProvider, ConcurrentHashMap, ConcurrentSkipListMap, EnumMap, HashMap, Hashtable, IdentityHashMap, LinkedHashMap, PrinterStateReasons, Properties, Provider, RenderingHints, SimpleBindings, TabularDataSupport, TreeMap, UIDefaults, WeakHashMap 
+
+Παράδειγμα
+import java.util.*;
+
+public class MapExample {
+   public static void main(String[] args) {
+      Map<String, Integer> m1 = new HashMap<String, Integer> (); 
+      m1.put("ΕΛΕΝΗ", 8);
+      m1.put("ΗΡΩ", 31);
+      m1.put("ΙΑΣΩΝ", 12);
+      m1.put("ΟΡΕΣΤΗΣ", 14);
+      System.out.println();
+      System.out.println(" Map Elements");
+      System.out.print("\t" + m1);
+   }
+}
+
+
+Reading exercises//-----------------------------------------------------------------------------------
+Language basics//---------------------------------------------------------------------------------------
+Suppose we’re editing the body of a function in Java, declaring and using local variables.
+
+int a = 5;     // (1)
+if (a > 10) {  // (2)
+    int b = 2; // (3)
+} else {       // (4)
+    int b = 4; // (5)
+}              // (6)
+b *= 3;        // (7)
+
+Which line of Java code causes a compilation error?
+
+
+Select the smallest set of changes that will fix the bug:
+
+Declare int b; after line 1
+Assign b = 0; before line 2
+Assign b = 2; instead of line 3
+Assign b = 4; instead of line 5
+Declare and assign int b *= 3; instead of line 7
+
+If we make the required changes above, what will happen if we comment out the else clause from the if-else?
+b will be 0
+b will be 3
+b will be 6
+We will receive an error from the Java compiler, before we run the program
+We will receive an error when we run the program, before we reach the last line
+We will receive an error when we run the program, when we reach the last line
+
+Numbers and strings//----------------------------------------------------------------------------------
+Does this Python code give an accurate conversion from Fahrenheit to Celsius?
+
+fahrenheit = 212.0
+celsius = (fahrenheit - 32) * 5/9
+
+Yes
+No: integer arithmetic will cause celsius to be zero
+No: integer arithmetic will cause celsius to be rounded down
+
+How should we print the result?
+System.out.println(fahrenheit, " -> ", celsius);
+System.out.println(fahrenheit + " -> " + celsius);
+System.out.println("%s -> %s" % (fahrenheit, celsius));
+System.out.println(Double.toString(fahrenheit) + " -> " + Double.toString(celsius));
+
+Classes and objects//----------------------------------------------
+Which of the options initializes position in one line
+public class Tortoise {
+
+    private int position = 0;      // (1)
+    static int position = 0;       // (2)
+
+    public Tortoise() {
+        int position = 0;          // (3)
+        int self.position = 0;     // (4)
+        int this.position = 0;     // (5)
+        int Tortoise.position = 0; // (6)
+    }
+    // ...
+}
+
+Which of the options initializes position using two lines?
+public class Tortoise {
+
+    private int position;          // (1)
+    static int position;           // (2)
+
+    public Tortoise() {
+        self.position = 0;         // (3)
+        this.position = 0;         // (4)
+        Tortoise.position = 0;     // (5)
+    }
+    // ...
+}
+
