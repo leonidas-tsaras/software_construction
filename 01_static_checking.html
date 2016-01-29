@@ -11,11 +11,14 @@
       <p>Ο τύπος δεδομένων ορίζεται ως ένα σύνολο τιμών και ένα σύνολο πράξεων και που το αποτέλεσμα ανήκει στο σύνολο τιμών.</p>
       <p>Η Java έχει πρωταρχικούς τύπους (primitive types) τιμών όπως:</p>
       <ul>
-        <li>int (ακέραιες τιμές όπως 5 και -200, μέχρι ± 2^31, ή περίπου ± 2 billion)</li>
-        <li>long (για ακέραιες τιμές μέχρι ± 2^63)</li>
-        <li>boolean (για true ή false)</li>
-        <li>double (για δεκαδικές τιμές)</li>
-        <li>char (για χαρακτήρες όπως 'A' και '$')</li>
+		<li><b>char</b> (16 bit. Για unicode χαρακτήρες όπως 'A' και 'Φ')</li>
+        <li><b>int</b> (32 bit. Ακέραιες τιμές όπως 5 και -200, μέχρι ± 2^31, ή περίπου ± 2 billion)</li>
+        <li><b>long</b> (64 bit. για ακέραιες τιμές μέχρι ± 2^63)</li>
+		<li><b>short</b> (16 bit)</li>
+        <li><b>boolean</b> (για true ή false)</li>
+		<li><b>float</b> (32 bit. Για δεκαδικές τιμές)</li>
+        <li><b>double</b> (64 bit. Για δεκαδικές τιμές)</li>
+        
       </ul>
       <p>Η Java έχει επίσης τύπους δεδομένων σε μορφή αντικειμένου όπως:</p>
       <ul>
@@ -80,44 +83,44 @@
     <p>Ελέγξτε για δυναμικά, στατικά ή μη ελεγχόμενα λάθη στα παρακάτω παραδείγματα.</p>
 
 
-<pre>
-<span class="res">int</span> n = 5;
-if (n) { //static
-    n = n + 1;
-}
-</pre>
+<!-- HTML generated using hilite.me -->
+<div style="background: #f0f0f0; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+<pre style="margin: 0; line-height: 160%"><span style="color: #902000">int</span> n <span style="color: #666666">=</span> <span style="color: #40a070">5</span><span style="color: #666666">;</span>
+<span style="color: #007020; font-weight: bold">if</span> <span style="color: #666666">(</span>n<span style="color: #666666">)</span> <span style="color: #666666">{</span> <span style="color: #60a0b0; font-style: italic">//static</span>
+	n <span style="color: #666666">=</span> n <span style="color: #666666">+</span> <span style="color: #40a070">1</span><span style="color: #666666">;</span>
+<span style="color: #666666">}</span>
 
-<pre>
-<span class="res">int</span> big = 200000; // 200,000
-big = big * big;  // δίνει 4 δισ.
-System.out.println(big); //1345294336
-</pre>
 
-<pre>
-double probability = 1/5;
-System.out.println(probability); //0.0
-</pre>
+<span style="color: #902000">int</span> big <span style="color: #666666">=</span> <span style="color: #40a070">200000</span><span style="color: #666666">;</span> <span style="color: #60a0b0; font-style: italic">// 200,000</span>
+big <span style="color: #666666">=</span> big <span style="color: #666666">*</span> big<span style="color: #666666">;</span>  <span style="color: #60a0b0; font-style: italic">// δίνει 4 δισ.</span>
+System<span style="color: #666666">.</span><span style="color: #4070a0">out</span><span style="color: #666666">.</span><span style="color: #4070a0">println</span><span style="color: #666666">(</span>big<span style="color: #666666">);</span> <span style="color: #60a0b0; font-style: italic">//1345294336</span>
 
-<pre>
-<span class="res">int</span> sum = 0;
-<span class="res">int</span> n = 0;
-<span class="res">int</span> average = sum/n;
-System.out.println(average); //ArithmeticException
-</pre>
 
-<pre>
-double sum = 7;
-double n = 0;
-double average = sum/n;
-System.out.println(average); //Infinity
-</pre>
+<span style="color: #902000">double</span> probability <span style="color: #666666">=</span> <span style="color: #40a070">1</span><span style="color: #666666">/</span><span style="color: #40a070">5</span><span style="color: #666666">;</span>
+System<span style="color: #666666">.</span><span style="color: #4070a0">out</span><span style="color: #666666">.</span><span style="color: #4070a0">println</span><span style="color: #666666">(</span>probability<span style="color: #666666">);</span> <span style="color: #60a0b0; font-style: italic">//0.0</span>
 
-<pre>
-final <span class="res">int</span> n = 5;
-System.out.println(n++);
-</pre>    
+
+<span style="color: #902000">int</span> sum <span style="color: #666666">=</span> <span style="color: #40a070">0</span><span style="color: #666666">;</span>
+<span style="color: #902000">int</span> n <span style="color: #666666">=</span> <span style="color: #40a070">0</span><span style="color: #666666">;</span>
+<span style="color: #902000">int</span> average <span style="color: #666666">=</span> sum<span style="color: #666666">/</span>n<span style="color: #666666">;</span>
+System<span style="color: #666666">.</span><span style="color: #4070a0">out</span><span style="color: #666666">.</span><span style="color: #4070a0">println</span><span style="color: #666666">(</span>average<span style="color: #666666">);</span> <span style="color: #60a0b0; font-style: italic">//ArithmeticException</span>
+
+
+<span style="color: #902000">double</span> sum <span style="color: #666666">=</span> <span style="color: #40a070">7</span><span style="color: #666666">;</span>
+<span style="color: #902000">double</span> n <span style="color: #666666">=</span> <span style="color: #40a070">0</span><span style="color: #666666">;</span>
+<span style="color: #902000">double</span> average <span style="color: #666666">=</span> sum<span style="color: #666666">/</span>n<span style="color: #666666">;</span>
+System<span style="color: #666666">.</span><span style="color: #4070a0">out</span><span style="color: #666666">.</span><span style="color: #4070a0">println</span><span style="color: #666666">(</span>average<span style="color: #666666">);</span> <span style="color: #60a0b0; font-style: italic">//Infinity</span>
+
+
+<span style="color: #007020; font-weight: bold">final</span> <span style="color: #902000">int</span> n <span style="color: #666666">=</span> <span style="color: #40a070">5</span><span style="color: #666666">;</span>
+System<span style="color: #666666">.</span><span style="color: #4070a0">out</span><span style="color: #666666">.</span><span style="color: #4070a0">println</span><span style="color: #666666">(</span>n<span style="color: #666666">++);</span>
+</pre>
+</div>
+
+	
 </section>
 
+<!--
     <h5>To Hailstone σε μια κλάση</h5>
 <section>
 <pre>
@@ -143,6 +146,7 @@ public class Hailstone {
 }
 </pre>
 </section>
+-->
   </body>
 </html>
 

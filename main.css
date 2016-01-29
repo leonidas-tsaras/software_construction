@@ -62,21 +62,6 @@ p {
 	margin-bottom: .4em;
 }
 
-pre {
-	font-family: "Roboto Mono";
-	font-weight: 300;
-	margin-top: 1em;
-	margin-bottom: 1em;
-	margin-left: 0em;
-	border:solid gray;border-width:.1em .1em .1em .5em;	
-	padding: .5em;
-	/*white-space: pre-line;*/
-}
-
-pre span.res {
-	color: #333399; 
-	font-weight: bold;
-}
 
 b {
 	font-weight: bold;

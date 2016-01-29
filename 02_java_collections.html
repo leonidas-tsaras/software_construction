@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
     <title>Java Collections</title>
-    <!-- http://web.mit.edu/6.005/www/fa15/classes/01-static-checking/ -->
+    <!-- http://web.mit.edu/6.005/www/fa15/classes/02-basic-java/ -->
     <link href="main.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
@@ -21,34 +21,45 @@
     <h3>Παράδειγμα με απλή κλάση.</h3>
     <section>
       <p>Στο παρακάτω παράδειγμα μπορεί να κληθεί η get και set αλλά τα Objects που διαχειρίζονται να είναι διαφορετικού τύπου. Άρα δεν μπορεί να υπάρξει έλεγχος κατά τη μεταγλώτιση.</p>
-<pre>
-public class Box {
-  private Object object;
-  public void set(Object object) { 
-    this.object = object;
-  }
-  
-  public Object get() { 
-    return object; 
-  }
-}
+
+<!-- HTML generated using hilite.me -->
+<div style="background: #f0f0f0; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+<pre style="margin: 0; line-height: 160%"><span style="color: #007020; font-weight: bold">public</span> <span style="color: #007020; font-weight: bold">class</span> <span style="color: #0e84b5; font-weight: bold">Box</span> <span style="color: #666666">{</span>
+	<span style="color: #007020; font-weight: bold">private</span> Object object<span style="color: #666666">;</span>
+	<span style="color: #007020; font-weight: bold">public</span> <span style="color: #902000">void</span> <span style="color: #06287e">set</span><span style="color: #666666">(</span>Object object<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+		<span style="color: #007020; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #4070a0">object</span> <span style="color: #666666">=</span> object<span style="color: #666666">;</span>
+	<span style="color: #666666">}</span>
+
+	<span style="color: #007020; font-weight: bold">public</span> Object <span style="color: #06287e">get</span><span style="color: #666666">()</span> <span style="color: #666666">{</span> 
+		<span style="color: #007020; font-weight: bold">return</span> object<span style="color: #666666">;</span> 
+	<span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
 </pre>
+</div>
+
+	  
+	  
     </section>
 
     <h3>Παράδειγμα με γενική κλάση.</h3>
     <section>
     <p>Με τη γενική κλάση αυστηροποιείται η παράμετρος του Object ή των Objects (αφού η γενική κλάση μπορεί να πάρει παραπάνω από μία παράμετρο).</p>
-<pre>
-public class Box&lt;T&gt; {
-  private T t;
-  public void set(T t) { 
-    this.t = t; 
-  }
-  public T get() {
-    return t;
-  }
-}
+
+<!-- HTML generated using hilite.me -->
+<div style="background: #f0f0f0; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+<pre style="margin: 0; line-height: 160%"><span style="color: #007020; font-weight: bold">public</span> <span style="color: #007020; font-weight: bold">class</span> <span style="color: #0e84b5; font-weight: bold">Box</span><span style="color: #666666">&lt;</span>T<span style="color: #666666">&gt;</span> <span style="color: #666666">{</span>
+	<span style="color: #007020; font-weight: bold">private</span> T t<span style="color: #666666">;</span>
+	<span style="color: #007020; font-weight: bold">public</span> <span style="color: #902000">void</span> <span style="color: #06287e">set</span><span style="color: #666666">(</span>T t<span style="color: #666666">)</span> <span style="color: #666666">{</span> 
+		<span style="color: #007020; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #4070a0">t</span> <span style="color: #666666">=</span> t<span style="color: #666666">;</span> 
+	<span style="color: #666666">}</span>
+	<span style="color: #007020; font-weight: bold">public</span> T <span style="color: #06287e">get</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+		<span style="color: #007020; font-weight: bold">return</span> t<span style="color: #666666">;</span>
+	<span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
 </pre>
+</div>
+
+
     </section>
 
     <h2>Ονοματολογία παραμέτρων</h2>
@@ -67,36 +78,44 @@ public class Box&lt;T&gt; {
 
     <h3>Παράδειγμα με πολλές παραμέτρους</h3>
     <section>
-<pre>
-public interface Pair&lt;K, V&gt; {
-    public K getKey();
-    public V getValue();
-}
 
-public class OrderedPair&lt;K, V&gt; implements Pair&lt;K, V&gt; {
+<!-- HTML generated using hilite.me -->
+<div style="background: #f0f0f0; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+<pre style="margin: 0; line-height: 160%"><span style="color: #007020; font-weight: bold">public</span> <span style="color: #007020; font-weight: bold">interface</span> <span style="color: #0e84b5; font-weight: bold">Pair</span><span style="color: #666666">&lt;</span>K<span style="color: #666666">,</span> V<span style="color: #666666">&gt;</span> <span style="color: #666666">{</span>
+	<span style="color: #007020; font-weight: bold">public</span> K <span style="color: #06287e">getKey</span><span style="color: #666666">();</span>
+	<span style="color: #007020; font-weight: bold">public</span> V <span style="color: #06287e">getValue</span><span style="color: #666666">();</span>
+<span style="color: #666666">}</span>
 
-  private K key;
-  private V value;
-
-  public OrderedPair(K key, V value) {
-    this.key = key;
-    this.value = value;
-  }
-
-  public K getKey() { return key; }
-  public V getValue() { return value; }
-}
+<span style="color: #007020; font-weight: bold">public</span> <span style="color: #007020; font-weight: bold">class</span> <span style="color: #0e84b5; font-weight: bold">OrderedPair</span><span style="color: #666666">&lt;</span>K<span style="color: #666666">,</span> V<span style="color: #666666">&gt;</span> <span style="color: #007020; font-weight: bold">implements</span> Pair<span style="color: #666666">&lt;</span>K<span style="color: #666666">,</span> V<span style="color: #666666">&gt;</span> <span style="color: #666666">{</span>
+	<span style="color: #007020; font-weight: bold">private</span> K key<span style="color: #666666">;</span>
+	<span style="color: #007020; font-weight: bold">private</span> V value<span style="color: #666666">;</span>
+	<span style="color: #007020; font-weight: bold">public</span> <span style="color: #06287e">OrderedPair</span><span style="color: #666666">(</span>K key<span style="color: #666666">,</span> V value<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+		<span style="color: #007020; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #4070a0">key</span> <span style="color: #666666">=</span> key<span style="color: #666666">;</span>
+		<span style="color: #007020; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #4070a0">value</span> <span style="color: #666666">=</span> value<span style="color: #666666">;</span>
+	<span style="color: #666666">}</span>
+	<span style="color: #007020; font-weight: bold">public</span> K <span style="color: #06287e">getKey</span><span style="color: #666666">()</span> <span style="color: #666666">{</span> <span style="color: #007020; font-weight: bold">return</span> key<span style="color: #666666">;</span> <span style="color: #666666">}</span>
+	<span style="color: #007020; font-weight: bold">public</span> V <span style="color: #06287e">getValue</span><span style="color: #666666">()</span> <span style="color: #666666">{</span> <span style="color: #007020; font-weight: bold">return</span> value<span style="color: #666666">;</span> <span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
 </pre>
+</div>
+
+	
       <p>Για να δημιουργήσετε αντικείμενα από την παραπάνω κλάση γράφετε:</p>
-<pre>
-Pair&lt;String, Integer&gt; p1 = new OrderedPair&lt;String, Integer&gt;("Even", 8);
-Pair&lt;String, String&gt;  p2 = new OrderedPair&lt;String, String&gt;("hello", "world");
+
+<!-- HTML generated using hilite.me -->
+<div style="background: #f0f0f0; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+<pre style="margin: 0; line-height: 160%">Pair<span style="color: #666666">&lt;</span>String<span style="color: #666666">,</span> Integer<span style="color: #666666">&gt;</span> p1 <span style="color: #666666">=</span> <span style="color: #007020; font-weight: bold">new</span> OrderedPair<span style="color: #666666">&lt;</span>String<span style="color: #666666">,</span> Integer<span style="color: #666666">&gt;(</span><span style="color: #4070a0">&quot;Even&quot;</span><span style="color: #666666">,</span> <span style="color: #40a070">8</span><span style="color: #666666">);</span>
+Pair<span style="color: #666666">&lt;</span>String<span style="color: #666666">,</span> String<span style="color: #666666">&gt;</span>  p2 <span style="color: #666666">=</span> <span style="color: #007020; font-weight: bold">new</span> OrderedPair<span style="color: #666666">&lt;</span>String<span style="color: #666666">,</span> String<span style="color: #666666">&gt;(</span><span style="color: #4070a0">&quot;hello&quot;</span><span style="color: #666666">,</span> <span style="color: #4070a0">&quot;world&quot;</span><span style="color: #666666">);</span>
 </pre>
-      <p>ή ποιό σύντομα:</p>
-<pre>
-OrderedPair&lt;String, Integer&gt; p1 = new OrderedPair&lt;&gt;("Even", 8);
-OrderedPair&lt;String, String&gt;  p2 = new OrderedPair&lt;&gt;("hello", "world");
-</pre>     
+</div>
+<p>ή πιο σύντομα</p>
+<!-- HTML generated using hilite.me -->
+<div style="background: #f0f0f0; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+<pre style="margin: 0; line-height: 160%">OrderedPair<span style="color: #666666">&lt;</span>String<span style="color: #666666">,</span> Integer<span style="color: #666666">&gt;</span> p1 <span style="color: #666666">=</span> <span style="color: #007020; font-weight: bold">new</span> OrderedPair<span style="color: #666666">&lt;&gt;(</span><span style="color: #4070a0">&quot;Even&quot;</span><span style="color: #666666">,</span> <span style="color: #40a070">8</span><span style="color: #666666">);</span>
+OrderedPair<span style="color: #666666">&lt;</span>String<span style="color: #666666">,</span> String<span style="color: #666666">&gt;</span>  p2 <span style="color: #666666">=</span> <span style="color: #007020; font-weight: bold">new</span> OrderedPair<span style="color: #666666">&lt;&gt;(</span><span style="color: #4070a0">&quot;hello&quot;</span><span style="color: #666666">,</span> <span style="color: #4070a0">&quot;world&quot;</span><span style="color: #666666">);</span>
+</pre>
+</div>
+
     </section>
 
     <h2>Γενικές μέθοδες (Generic Methods)</h2>
@@ -106,49 +125,59 @@ OrderedPair&lt;String, String&gt;  p2 = new OrderedPair&lt;&gt;("hello", "world"
     </section>
     <h3>Παράδειγμα</h3>
     <section>
-<pre>
-public class Util {
-  public static &lt;K, V&gt; boolean compare(Pair&lt;K, V&gt; p1, Pair&lt;K, V&gt; p2) {
-    return p1.getKey().equals(p2.getKey()) && p1.getValue().equals(p2.getValue());
-  }
-}
+	
+	
+<!-- HTML generated using hilite.me -->
+<div style="background: #f0f0f0; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+<pre style="margin: 0; line-height: 160%"><span style="color: #007020; font-weight: bold">public</span> <span style="color: #007020; font-weight: bold">class</span> <span style="color: #0e84b5; font-weight: bold">Util</span> <span style="color: #666666">{</span>
+	<span style="color: #007020; font-weight: bold">public</span> <span style="color: #007020; font-weight: bold">static</span> <span style="color: #666666">&lt;</span>K<span style="color: #666666">,</span> V<span style="color: #666666">&gt;</span> <span style="color: #902000">boolean</span> compare<span style="color: #666666">(</span>Pair<span style="color: #666666">&lt;</span>K<span style="color: #666666">,</span> V<span style="color: #666666">&gt;</span> p1<span style="color: #666666">,</span> Pair<span style="color: #666666">&lt;</span>K<span style="color: #666666">,</span> V<span style="color: #666666">&gt;</span> p2<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+		<span style="color: #007020; font-weight: bold">return</span> p1<span style="color: #666666">.</span><span style="color: #4070a0">getKey</span><span style="color: #666666">().</span><span style="color: #4070a0">equals</span><span style="color: #666666">(</span>p2<span style="color: #666666">.</span><span style="color: #4070a0">getKey</span><span style="color: #666666">())</span> <span style="color: #666666">&amp;&amp;</span> p1<span style="color: #666666">.</span><span style="color: #4070a0">getValue</span><span style="color: #666666">().</span><span style="color: #4070a0">equals</span><span style="color: #666666">(</span>p2<span style="color: #666666">.</span><span style="color: #4070a0">getValue</span><span style="color: #666666">());</span>
+	<span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
 
-public class Pair&lt;K, V&gt; {
-
-  private K key;
-  private V value;
-
-  public Pair(K key, V value) {
-    this.key = key;
-    this.value = value;
-  }
-
-  public void setKey(K key) { 
-    this.key = key;
-   }
-  public void setValue(V value) {
-     this.value = value; 
-  }
-  public K getKey()   { 
-    return key; 
-  }
-  public V getValue() { 
-    return value; 
-  }
-}
+<span style="color: #007020; font-weight: bold">public</span> <span style="color: #007020; font-weight: bold">class</span> <span style="color: #0e84b5; font-weight: bold">Pair</span><span style="color: #666666">&lt;</span>K<span style="color: #666666">,</span> V<span style="color: #666666">&gt;</span> <span style="color: #666666">{</span>
+	<span style="color: #007020; font-weight: bold">private</span> K key<span style="color: #666666">;</span>
+	<span style="color: #007020; font-weight: bold">private</span> V value<span style="color: #666666">;</span>
+	<span style="color: #007020; font-weight: bold">public</span> <span style="color: #06287e">Pair</span><span style="color: #666666">(</span>K key<span style="color: #666666">,</span> V value<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+		<span style="color: #007020; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #4070a0">key</span> <span style="color: #666666">=</span> key<span style="color: #666666">;</span>
+		<span style="color: #007020; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #4070a0">value</span> <span style="color: #666666">=</span> value<span style="color: #666666">;</span>
+	<span style="color: #666666">}</span>
+	<span style="color: #007020; font-weight: bold">public</span> <span style="color: #902000">void</span> <span style="color: #06287e">setKey</span><span style="color: #666666">(</span>K key<span style="color: #666666">)</span> <span style="color: #666666">{</span> 
+		<span style="color: #007020; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #4070a0">key</span> <span style="color: #666666">=</span> key<span style="color: #666666">;</span>
+	<span style="color: #666666">}</span>
+	<span style="color: #007020; font-weight: bold">public</span> <span style="color: #902000">void</span> <span style="color: #06287e">setValue</span><span style="color: #666666">(</span>V value<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+		<span style="color: #007020; font-weight: bold">this</span><span style="color: #666666">.</span><span style="color: #4070a0">value</span> <span style="color: #666666">=</span> value<span style="color: #666666">;</span> 
+	<span style="color: #666666">}</span>
+	<span style="color: #007020; font-weight: bold">public</span> K <span style="color: #06287e">getKey</span><span style="color: #666666">()</span>   <span style="color: #666666">{</span> 
+		<span style="color: #007020; font-weight: bold">return</span> key<span style="color: #666666">;</span> 
+	<span style="color: #666666">}</span>
+	<span style="color: #007020; font-weight: bold">public</span> V <span style="color: #06287e">getValue</span><span style="color: #666666">()</span> <span style="color: #666666">{</span> 
+		<span style="color: #007020; font-weight: bold">return</span> value<span style="color: #666666">;</span> 
+	<span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
 </pre>
+</div>
+
     <p>Μπορείς να καλέσεις μια μέθοδο όπως:</p>
-<pre>
-Pair&lt;Integer, String&gt; p1 = new Pair&lt;&gt;(1, "apple");
-Pair&lt;Integer, String&gt; p2 = new Pair&lt;&gt;(2, "pear");
-boolean same = Util.&lt;Integer, String&gt;compare(p1, p2);
+	
+<!-- HTML generated using hilite.me -->
+<div style="background: #f0f0f0; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+<pre style="margin: 0; line-height: 160%">Pair<span style="color: #666666">&lt;</span>Integer<span style="color: #666666">,</span> String<span style="color: #666666">&gt;</span> p1 <span style="color: #666666">=</span> <span style="color: #007020; font-weight: bold">new</span> Pair<span style="color: #666666">&lt;&gt;(</span><span style="color: #40a070">1</span><span style="color: #666666">,</span> <span style="color: #4070a0">&quot;apple&quot;</span><span style="color: #666666">);</span>
+Pair<span style="color: #666666">&lt;</span>Integer<span style="color: #666666">,</span> String<span style="color: #666666">&gt;</span> p2 <span style="color: #666666">=</span> <span style="color: #007020; font-weight: bold">new</span> Pair<span style="color: #666666">&lt;&gt;(</span><span style="color: #40a070">2</span><span style="color: #666666">,</span> <span style="color: #4070a0">&quot;pear&quot;</span><span style="color: #666666">);</span>
+<span style="color: #902000">boolean</span> same <span style="color: #666666">=</span> Util<span style="color: #666666">.&lt;</span>Integer<span style="color: #666666">,</span> String<span style="color: #666666">&gt;</span>compare<span style="color: #666666">(</span>p1<span style="color: #666666">,</span> p2<span style="color: #666666">);</span>
 </pre>
+</div>
+
       <p>ή πιο σύντομα:</p>
-<pre>
-Pair&lt;Integer, String&gt; p1 = new Pair&lt;&gt;(1, "apple");
-Pair&lt;Integer, String&gt; p2 = new Pair&lt;&gt;(2, "pear");
-boolean same = Util.compare(p1, p2);
+	  
+<!-- HTML generated using hilite.me -->
+<div style="background: #f0f0f0; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+<pre style="margin: 0; line-height: 160%">Pair<span style="color: #666666">&lt;</span>Integer<span style="color: #666666">,</span> String<span style="color: #666666">&gt;</span> p1 <span style="color: #666666">=</span> <span style="color: #007020; font-weight: bold">new</span> Pair<span style="color: #666666">&lt;&gt;(</span><span style="color: #40a070">1</span><span style="color: #666666">,</span> <span style="color: #4070a0">&quot;apple&quot;</span><span style="color: #666666">);</span>
+Pair<span style="color: #666666">&lt;</span>Integer<span style="color: #666666">,</span> String<span style="color: #666666">&gt;</span> p2 <span style="color: #666666">=</span> <span style="color: #007020; font-weight: bold">new</span> Pair<span style="color: #666666">&lt;&gt;(</span><span style="color: #40a070">2</span><span style="color: #666666">,</span> <span style="color: #4070a0">&quot;pear&quot;</span><span style="color: #666666">);</span>
+<span style="color: #902000">boolean</span> same <span style="color: #666666">=</span> Util<span style="color: #666666">.</span><span style="color: #4070a0">compare</span><span style="color: #666666">(</span>p1<span style="color: #666666">,</span> p2<span style="color: #666666">);</span>
 </pre>
+</div>
+
     </section>
 
     <h1>Java Collections</h1>
@@ -171,28 +200,31 @@ boolean same = Util.compare(p1, p2);
 
     <h4>Παράδειγμα</h4>
     <section>
-<pre>
-import java.util.*;
+	
+<!-- HTML generated using hilite.me -->
+<div style="background: #f0f0f0; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+<pre style="margin: 0; line-height: 160%"><span style="color: #007020; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">java.util.*</span><span style="color: #666666">;</span>
+<span style="color: #007020; font-weight: bold">public</span> <span style="color: #007020; font-weight: bold">class</span> <span style="color: #0e84b5; font-weight: bold">ListExample</span> <span style="color: #666666">{</span>
+	<span style="color: #007020; font-weight: bold">public</span> <span style="color: #007020; font-weight: bold">static</span> <span style="color: #902000">void</span> <span style="color: #06287e">main</span><span style="color: #666666">(</span>String<span style="color: #666666">[]</span> args<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+		List<span style="color: #666666">&lt;</span>String<span style="color: #666666">&gt;</span>  a1 <span style="color: #666666">=</span> <span style="color: #007020; font-weight: bold">new</span> ArrayList<span style="color: #666666">&lt;</span>String<span style="color: #666666">&gt;();</span>
+		a1<span style="color: #666666">.</span><span style="color: #4070a0">add</span><span style="color: #666666">(</span><span style="color: #4070a0">&quot;ΕΛΕΝΗ&quot;</span><span style="color: #666666">);</span>
+		a1<span style="color: #666666">.</span><span style="color: #4070a0">add</span><span style="color: #666666">(</span><span style="color: #4070a0">&quot;ΗΡΩ&quot;</span><span style="color: #666666">);</span>
+		a1<span style="color: #666666">.</span><span style="color: #4070a0">add</span><span style="color: #666666">(</span><span style="color: #4070a0">&quot;ΙΑΣΩΝ&quot;</span><span style="color: #666666">);</span>
+		System<span style="color: #666666">.</span><span style="color: #4070a0">out</span><span style="color: #666666">.</span><span style="color: #4070a0">println</span><span style="color: #666666">(</span><span style="color: #4070a0">&quot; ArrayList Elements&quot;</span><span style="color: #666666">);</span>
+		System<span style="color: #666666">.</span><span style="color: #4070a0">out</span><span style="color: #666666">.</span><span style="color: #4070a0">print</span><span style="color: #666666">(</span><span style="color: #4070a0">&quot;\t&quot;</span> <span style="color: #666666">+</span> a1<span style="color: #666666">);</span>
 
-public class ListExample {
-   public static void main(String[] args) {
-      List&lt;String&gt;  a1 = new ArrayList&lt;String&gt;();
-      a1.add("ΕΛΕΝΗ");
-      a1.add("ΗΡΩ");
-      a1.add("ΙΑΣΩΝ");
-      System.out.println(" ArrayList Elements");
-      System.out.print("\t" + a1);
+		List<span style="color: #666666">&lt;</span>String<span style="color: #666666">&gt;</span>  l1 <span style="color: #666666">=</span> <span style="color: #007020; font-weight: bold">new</span> LinkedList<span style="color: #666666">&lt;</span>String<span style="color: #666666">&gt;();</span>
+		l1<span style="color: #666666">.</span><span style="color: #4070a0">add</span><span style="color: #666666">(</span><span style="color: #4070a0">&quot;ΕΛΕΝΗ&quot;</span><span style="color: #666666">);</span>
+		l1<span style="color: #666666">.</span><span style="color: #4070a0">add</span><span style="color: #666666">(</span><span style="color: #4070a0">&quot;ΗΡΩ&quot;</span><span style="color: #666666">);</span>
+		l1<span style="color: #666666">.</span><span style="color: #4070a0">add</span><span style="color: #666666">(</span><span style="color: #4070a0">&quot;ΙΑΣΩΝ&quot;</span><span style="color: #666666">);</span>
+		System<span style="color: #666666">.</span><span style="color: #4070a0">out</span><span style="color: #666666">.</span><span style="color: #4070a0">println</span><span style="color: #666666">();</span>
+		System<span style="color: #666666">.</span><span style="color: #4070a0">out</span><span style="color: #666666">.</span><span style="color: #4070a0">println</span><span style="color: #666666">(</span><span style="color: #4070a0">&quot; LinkedList Elements&quot;</span><span style="color: #666666">);</span>
+		System<span style="color: #666666">.</span><span style="color: #4070a0">out</span><span style="color: #666666">.</span><span style="color: #4070a0">print</span><span style="color: #666666">(</span><span style="color: #4070a0">&quot;\t&quot;</span> <span style="color: #666666">+</span> l1<span style="color: #666666">);</span>
+	<span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
+</pre>
+</div>
 
-      List&lt;String&gt;  l1 = new LinkedList&lt;String&gt;();
-      l1.add("ΕΛΕΝΗ");
-      l1.add("ΗΡΩ");
-      l1.add("ΙΑΣΩΝ");
-      System.out.println();
-      System.out.println(" LinkedList Elements");
-      System.out.print("\t" + l1);
-   }
-}
-</pre>  
     </section>
 
     <h2>Set</h2>
@@ -211,33 +243,32 @@ public class ListExample {
     </section>
     <h4>Παράδειγμα</h4>
     <section>
-<pre>
-import java.util.*;
 
-public class SetExample {
+<!-- HTML generated using hilite.me -->
+<div style="background: #f0f0f0; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+<pre style="margin: 0; line-height: 160%"><span style="color: #007020; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">java.util.*</span><span style="color: #666666">;</span>
+<span style="color: #007020; font-weight: bold">public</span> <span style="color: #007020; font-weight: bold">class</span> <span style="color: #0e84b5; font-weight: bold">SetExample</span> <span style="color: #666666">{</span>
+	<span style="color: #007020; font-weight: bold">public</span> <span style="color: #007020; font-weight: bold">static</span> <span style="color: #902000">void</span> <span style="color: #06287e">main</span><span style="color: #666666">(</span>String args<span style="color: #666666">[])</span> <span style="color: #666666">{</span>
+		<span style="color: #902000">int</span> count<span style="color: #666666">[]</span> <span style="color: #666666">=</span> <span style="color: #666666">{</span><span style="color: #40a070">34</span><span style="color: #666666">,</span> <span style="color: #40a070">22</span><span style="color: #666666">,</span><span style="color: #40a070">10</span><span style="color: #666666">,</span><span style="color: #40a070">60</span><span style="color: #666666">,</span><span style="color: #40a070">30</span><span style="color: #666666">,</span><span style="color: #40a070">22</span><span style="color: #666666">};</span>
+		Set<span style="color: #666666">&lt;</span>Integer<span style="color: #666666">&gt;</span> set <span style="color: #666666">=</span> <span style="color: #007020; font-weight: bold">new</span> HashSet<span style="color: #666666">&lt;</span>Integer<span style="color: #666666">&gt;();</span>
+		<span style="color: #007020; font-weight: bold">try</span> <span style="color: #666666">{</span>
+			<span style="color: #007020; font-weight: bold">for</span><span style="color: #666666">(</span><span style="color: #902000">int</span> i <span style="color: #666666">=</span> <span style="color: #40a070">0</span><span style="color: #666666">;</span> i<span style="color: #666666">&lt;</span><span style="color: #40a070">5</span><span style="color: #666666">;</span> i<span style="color: #666666">++){</span>
+				set<span style="color: #666666">.</span><span style="color: #4070a0">add</span><span style="color: #666666">(</span>count<span style="color: #666666">[</span>i<span style="color: #666666">]);</span>
+			<span style="color: #666666">}</span>
+			System<span style="color: #666666">.</span><span style="color: #4070a0">out</span><span style="color: #666666">.</span><span style="color: #4070a0">println</span><span style="color: #666666">(</span>set<span style="color: #666666">);</span>
 
-   public static void main(String args[]) { 
-      int count[] = {34, 22,10,60,30,22};
-      Set&lt;Integer&gt; set = new HashSet&lt;Integer&gt;();
-      try{
-         for(int i = 0; i&lt;5; i++){
-            set.add(count[i]);
-         }
-         System.out.println(set);
-
-         TreeSet&lt;Integer&gt;  sortedSet = new TreeSet&lt;Integer&gt;(set);
-         System.out.println("The sorted list is:");
-         System.out.println(sortedSet);
-
-         System.out.println("The First element of the set is: "+
-         (Integer)sortedSet.first());
-         System.out.println("The last element of the set is: "+
-         (Integer)sortedSet.last());
-      }
-      catch(Exception e){}
-   }
-} 
+			TreeSet<span style="color: #666666">&lt;</span>Integer<span style="color: #666666">&gt;</span>  sortedSet <span style="color: #666666">=</span> <span style="color: #007020; font-weight: bold">new</span> TreeSet<span style="color: #666666">&lt;</span>Integer<span style="color: #666666">&gt;(</span>set<span style="color: #666666">);</span>
+			System<span style="color: #666666">.</span><span style="color: #4070a0">out</span><span style="color: #666666">.</span><span style="color: #4070a0">println</span><span style="color: #666666">(</span><span style="color: #4070a0">&quot;The sorted list is:&quot;</span><span style="color: #666666">);</span>
+			System<span style="color: #666666">.</span><span style="color: #4070a0">out</span><span style="color: #666666">.</span><span style="color: #4070a0">println</span><span style="color: #666666">(</span>sortedSet<span style="color: #666666">);</span>
+			System<span style="color: #666666">.</span><span style="color: #4070a0">out</span><span style="color: #666666">.</span><span style="color: #4070a0">println</span><span style="color: #666666">(</span><span style="color: #4070a0">&quot;The First element of the set is: &quot;</span> <span style="color: #666666">+</span> <span style="color: #666666">(</span>Integer<span style="color: #666666">)</span>sortedSet<span style="color: #666666">.</span><span style="color: #4070a0">first</span><span style="color: #666666">());</span>
+			System<span style="color: #666666">.</span><span style="color: #4070a0">out</span><span style="color: #666666">.</span><span style="color: #4070a0">println</span><span style="color: #666666">(</span><span style="color: #4070a0">&quot;The last element of the set is: &quot;</span> <span style="color: #666666">+</span> <span style="color: #666666">(</span>Integer<span style="color: #666666">)</span>sortedSet<span style="color: #666666">.</span><span style="color: #4070a0">last</span><span style="color: #666666">());</span>
+		<span style="color: #666666">}</span>
+		<span style="color: #007020; font-weight: bold">catch</span><span style="color: #666666">(</span>Exception e<span style="color: #666666">)</span> <span style="color: #666666">{</span> <span style="color: #666666">}</span>
+	<span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
 </pre>
+</div>
+
       </section>
 
     <h2>Map</h2>
@@ -253,21 +284,26 @@ public class SetExample {
     </section>
     <h4>Παράδειγμα</h4>
     <section>
-<pre>
-import java.util.*;
 
-public class MapExample {
-   public static void main(String[] args) {
-      Map&lt;String, Integer&gt; m1 = new HashMap&lt;String, Integer&gt; (); 
-      m1.put("ΕΛΕΝΗ", 8);
-      m1.put("ΗΡΩ", 31);
-      m1.put("ΙΑΣΩΝ", 12);
-      m1.put("ΟΡΕΣΤΗΣ", 14);
-      System.out.println();
-      System.out.println(" Map Elements");
-      System.out.print("\t" + m1);
-   }
-}
+	
+<!-- HTML generated using hilite.me -->
+<div style="background: #f0f0f0; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+<pre style="margin: 0; line-height: 160%"><span style="color: #007020; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">java.util.*</span><span style="color: #666666">;</span>
+<span style="color: #007020; font-weight: bold">public</span> <span style="color: #007020; font-weight: bold">class</span> <span style="color: #0e84b5; font-weight: bold">MapExample</span> <span style="color: #666666">{</span>
+	<span style="color: #007020; font-weight: bold">public</span> <span style="color: #007020; font-weight: bold">static</span> <span style="color: #902000">void</span> <span style="color: #06287e">main</span><span style="color: #666666">(</span>String<span style="color: #666666">[]</span> args<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+		Map<span style="color: #666666">&lt;</span>String<span style="color: #666666">,</span> Integer<span style="color: #666666">&gt;</span> m1 <span style="color: #666666">=</span> <span style="color: #007020; font-weight: bold">new</span> HashMap<span style="color: #666666">&lt;</span>String<span style="color: #666666">,</span> Integer<span style="color: #666666">&gt;</span> <span style="color: #666666">();</span> 
+		m1<span style="color: #666666">.</span><span style="color: #4070a0">put</span><span style="color: #666666">(</span><span style="color: #4070a0">&quot;ΕΛΕΝΗ&quot;</span><span style="color: #666666">,</span> <span style="color: #40a070">8</span><span style="color: #666666">);</span>
+		m1<span style="color: #666666">.</span><span style="color: #4070a0">put</span><span style="color: #666666">(</span><span style="color: #4070a0">&quot;ΗΡΩ&quot;</span><span style="color: #666666">,</span> <span style="color: #40a070">31</span><span style="color: #666666">);</span>
+		m1<span style="color: #666666">.</span><span style="color: #4070a0">put</span><span style="color: #666666">(</span><span style="color: #4070a0">&quot;ΙΑΣΩΝ&quot;</span><span style="color: #666666">,</span> <span style="color: #40a070">12</span><span style="color: #666666">);</span>
+		m1<span style="color: #666666">.</span><span style="color: #4070a0">put</span><span style="color: #666666">(</span><span style="color: #4070a0">&quot;ΟΡΕΣΤΗΣ&quot;</span><span style="color: #666666">,</span> <span style="color: #40a070">14</span><span style="color: #666666">);</span>
+		System<span style="color: #666666">.</span><span style="color: #4070a0">out</span><span style="color: #666666">.</span><span style="color: #4070a0">println</span><span style="color: #666666">();</span>
+		System<span style="color: #666666">.</span><span style="color: #4070a0">out</span><span style="color: #666666">.</span><span style="color: #4070a0">println</span><span style="color: #666666">(</span><span style="color: #4070a0">&quot; Map Elements&quot;</span><span style="color: #666666">);</span>
+		System<span style="color: #666666">.</span><span style="color: #4070a0">out</span><span style="color: #666666">.</span><span style="color: #4070a0">print</span><span style="color: #666666">(</span><span style="color: #4070a0">&quot;\t&quot;</span> <span style="color: #666666">+</span> m1<span style="color: #666666">);</span>
+	<span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
 </pre>
+</div>
+
+
   </body>
 </html>
