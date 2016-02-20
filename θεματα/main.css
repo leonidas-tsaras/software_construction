@@ -1,0 +1,82 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300&subset=greek,latin);
+@import url(https://fonts.googleapis.com/css?family=Roboto+Mono:400,300&subset=greek,latin);
+
+* {
+	padding: 0px;
+	margin: 0px;
+	border: none;
+	font-size: 16px;
+	font-family: "Open Sans", verdana, arial, tahoma;
+	font-weight: 300;
+	line-height: 140%;
+}
+body {
+	padding: 10px;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-weight: bold;
+	font-size: 1.5em;
+	margin-top: .5em;
+	margin-bottom: .2em;
+}
+h2 {
+	font-size: 1.4em;
+}
+h3 {
+	font-size: 1.3em;
+	margin-left: 1em;
+}
+h4 {
+	font-size: 1.2em;
+	margin-left: 2em;
+}
+h5 {
+	font-size: 1.1em;
+}
+h6 {
+	font-size: 1em;
+}
+
+h3, h3 + section {
+	margin-left: 1em;
+}
+h4, h4 + section {
+	margin-left: 2em;
+}
+h5, h5 + section, h5 + pre {
+	margin-left: 3em;
+}
+h6, h6 + section {
+	margin-left: 4em;
+}
+
+ul, ol {
+	list-style-position:inside;
+	margin: 1em;
+	line-height: 160%;
+}
+
+p {
+	margin-top: .4em;
+	margin-bottom: .4em;
+}
+
+pre {
+	font-family: "Roboto Mono";
+	font-weight: 300;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	margin-left: 0em;
+	border:solid gray;border-width:.1em .1em .1em .5em;	
+	padding: .5em;
+	/*white-space: pre-line;*/
+}
+
+pre span.res {
+	color: #333399; 
+	font-weight: bold;
+}
+
+b {
+	font-weight: bold;
+}
